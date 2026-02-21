@@ -1,0 +1,9 @@
+﻿[
+  {
+    "需求名": "修复HTTP SetJson允许空键写入并错误返回成功",
+    "需求提出时间": "2026-02-16 19:16:00",
+    "需求内容": "### Bug描述\n**位置:** 服务端 `HttpServer.cs` + `GameServer.cs` 的HTTP数据保存链路\n**严重性:** 高\n\n### 问题详情\n对 `/api/data/set` 发送空键请求（`jsonDicKey=\"\"`, `jsonDoubleKey=\"\"`）时，接口仍返回 `success=true` 与 `保存成功`，并把空键写入持久化文件。\n\n### 复现步骤\n1. 调用 `/api/player/join` 获取 token。\n2. 调用 `/api/data/set`，请求体 `data` 为：`{ \"jsonDicKey\": \"\", \"jsonDoubleKey\": \"\", \"jsonValue\": \"\" }`。\n3. 观察响应：`success=true`, `message=\"保存成功\"`。\n4. 查看服务端日志与数据文件：\n   - `GameServer_Detail_20260216_191448.txt:41` 记录 `HashSet 调用 - Key: , Field: , Value长度: 0`\n   - `GameServer_Detail_20260216_191448.txt:42` 记录 `HashSet 写入内存成功 - Key: , Field: , ...`\n   - `hash_data.json:5` 与 `hash_data.json:6` 出现空键结构 `\"\": { \"\": \"\" }`\n\n### 影响范围\n- 服务端会产生无效脏数据（空键Hash表）。\n- 客户端会被误导为“保存成功”，难以及时发现请求参数错误。\n- 后续数据排查与迁移成本上升。\n\n### 期望行为\n- 当 `jsonDicKey` 或 `jsonDoubleKey` 为空时，接口应返回失败（`success=false`）并拒绝写入。\n- `/api/data/set` 应透传真实执行结果，而不是固定返回成功。\n\n### 建议修复方案\n1. 在 `GameServer.HandleSetJsonHttp` 增加空字符串校验：仅 `ContainsKey` 不够，需要 `!string.IsNullOrWhiteSpace(...)`。\n2. 在 `HttpServer.HandleSetJsonRequest` 捕获业务异常并返回 `success=false` 与错误消息，不要固定 `保存成功`。\n3. 在 `LocalDataStorage.HashSet` 增加防御校验，拒绝空 `key/field`，避免脏数据落盘。",
+    "需求是否完成": false,
+    "解决方案": ""
+  }
+]

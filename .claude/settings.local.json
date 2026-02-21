@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"C:\\\\Users\\\\Nie\\\\Desktop\\\\World\\\\PROJECT_STRUCTURE.txt\":*)",
+      "Bash(msbuild:*)"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "screenshot-server",
+    "window-manager"
+  ]
+}

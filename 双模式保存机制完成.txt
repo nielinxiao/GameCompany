@@ -1,0 +1,484 @@
+╔═══════════════════════════════════════════════════════════════╗
+║              双模式保存机制实现完成                              ║
+╚═══════════════════════════════════════════════════════════════╝
+
+【核心设计】
+────────────────────────────────────────────────────────────────
+所有数据操作流程:
+  1. ✓ 所有数据立即保存到内存 (ConcurrentDictionary)
+  2. ✓ 所有读取优先从内存获取
+  3. ✓ 根据保存模式决定何时写入磁盘
+
+内存优先策略:
+  - StringGet/HashGet: 直接从内存读取，不访问磁盘
+  - StringSet/HashSet: 立即写入内存
+  - 磁盘文件: 仅用于持久化和启动时加载
+
+【两种保存模式】
+────────────────────────────────────────────────────────────────
+
+模式1: Instant 立即保存模式
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  触发时机: 每次客户端请求都立即保存到磁盘
+  工作流程:
+    客户端请求 (SetJson/BuyStock等)
+      ↓
+    数据立即写入内存
+      ↓
+    立即调用 SaveToDisk()
+      ↓
+    数据写入磁盘文件
+
+  优点:
+    ✓ 数据安全: 不会丢失任何数据
+    ✓ 实时持久化: 随时可以看到磁盘文件更新
+    ✓ 便于调试: 每次操作都能立即在文件中验证
+
+  缺点:
+    ✗ 性能开销: 频繁的磁盘IO
+    ✗ 适合场景: 开发测试、数据重要性高
+
+  适用场景:
+    • 开发测试阶段
+    • 需要频繁查看保存文件
+    • 数据重要性高，不能丢失
+    • 操作频率不高（每秒<10次）
+
+模式2: Interval 定时保存模式
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  触发时机: 按照指定间隔定时保存到磁盘
+  工作流程:
+    客户端请求 (SetJson/BuyStock等)
+      ↓
+    数据立即写入内存
+      ↓
+    设置脏标记 _isDirty = true
+      ↓
+    等待定时检查 (CheckAutoSave)
+      ↓
+    达到时间间隔 → SaveToDisk()
+      ↓
+    数据写入磁盘文件
+
+  优点:
+    ✓ 性能好: 减少磁盘IO
+    ✓ 批量保存: 多次操作合并保存
+    ✓ 适合生产: 适合高频操作场景
+
+  缺点:
+    ✗ 数据风险: 可能丢失最后一个间隔的数据
+    ✗ 延迟持久化: 不是立即写入磁盘
+
+  适用场景:
+    • 生产环境
+    • 操作频率高（每秒>10次）
+    • 可以接受少量数据丢失
+    • 优先考虑性能
+
+【配置方式】
+────────────────────────────────────────────────────────────────
+
+位置: GameCompanyServer\World Server\Servc\GameService.cs
+文件: 第20-42行 (Init 方法)
+
+方式1: 立即保存模式（开发测试推荐）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  public void Init()
+  {
+      // ...
+      // 模式1: 立即保存 - 每次客户端请求都立即保存
+      _localStorage = new LocalDataStorage("Data", SaveMode.Instant);
+      // ...
+  }
+
+  效果: 每次 SetJson/BuyStock/SellStock 都立即写入磁盘
+  日志: [LocalStorage] 保存模式: 立即保存模式（每次请求都保存）
+
+方式2: 定时保存模式 - 24小时（生产环境推荐）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  public void Init()
+  {
+      // ...
+      // 模式2: 定时保存 - 每24小时保存一次
+      _localStorage = new LocalDataStorage("Data", SaveMode.Interval, saveIntervalHours: 24);
+      // ...
+  }
+
+  效果: 数据修改后，每24小时保存一次
+  日志: [LocalStorage] 保存模式: 定时保存模式（每24小时保存一次）
+
+方式3: 定时保存模式 - 1小时（频繁测试推荐）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  public void Init()
+  {
+      // ...
+      // 模式3: 定时保存 - 每1小时保存一次
+      _localStorage = new LocalDataStorage("Data", SaveMode.Interval, saveIntervalHours: 1);
+      // ...
+  }
+
+  效果: 数据修改后，每1小时保存一次
+  日志: [LocalStorage] 保存模式: 定时保存模式（每1小时保存一次）
+
+【默认配置】
+────────────────────────────────────────────────────────────────
+当前默认: Interval 模式，24小时保存一次
+
+修改步骤:
+  1. 打开 GameService.cs
+  2. 找到 Init() 方法中的配置区域（有醒目的注释框）
+  3. 注释掉不需要的行，取消注释需要的行
+  4. 保存文件
+  5. 重新编译服务端
+  6. 重启服务端
+
+【代码实现详情】
+────────────────────────────────────────────────────────────────
+
+1. SaveMode 枚举
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  位置: LocalDataStorage.cs 第11-27行
+
+  public enum SaveMode
+  {
+      /// <summary>
+      /// 立即保存 - 每次客户端请求都立即保存到磁盘
+      /// </summary>
+      Instant,
+
+      /// <summary>
+      /// 定时保存 - 按照指定间隔保存到磁盘
+      /// </summary>
+      Interval
+  }
+
+2. 构造函数
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  位置: LocalDataStorage.cs 第55-88行
+
+  public LocalDataStorage(
+      string dataDirectory,
+      SaveMode saveMode = SaveMode.Interval,
+      int saveIntervalHours = 24)
+  {
+      _saveMode = saveMode;
+      _saveIntervalHours = saveIntervalHours;
+      // ...
+
+      // 输出当前保存模式
+      string modeDesc = _saveMode == SaveMode.Instant
+          ? "立即保存模式（每次请求都保存）"
+          : $"定时保存模式（每{_saveIntervalHours}小时保存一次）";
+      LogInfo($"[LocalStorage] 保存模式: {modeDesc}");
+  }
+
+3. StringSet - 立即保存到内存，根据模式决定是否写磁盘
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  位置: LocalDataStorage.cs 第93-104行
+
+  public void StringSet(string key, string value)
+  {
+      // 1. 立即保存到内存
+      _stringData[key] = value;
+      _isDirty = true;
+
+      // 2. 如果是立即保存模式，立即写入磁盘
+      if (_saveMode == SaveMode.Instant)
+      {
+          SaveToDisk();
+      }
+  }
+
+4. HashSet - 立即保存到内存，根据模式决定是否写磁盘
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  位置: LocalDataStorage.cs 第125-136行
+
+  public void HashSet(string key, string field, string value)
+  {
+      // 1. 立即保存到内存
+      var hash = _hashData.GetOrAdd(key, k => new ConcurrentDictionary<string, string>());
+      hash[field] = value;
+      _isDirty = true;
+
+      // 2. 如果是立即保存模式，立即写入磁盘
+      if (_saveMode == SaveMode.Instant)
+      {
+          SaveToDisk();
+      }
+  }
+
+5. StringGet/HashGet - 优先从内存读取
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  位置: LocalDataStorage.cs
+
+  public string StringGet(string key)
+  {
+      // 直接从内存中读取，不访问磁盘
+      return _stringData.TryGetValue(key, out var value) ? value : null;
+  }
+
+  public string HashGet(string key, string field)
+  {
+      // 直接从内存中读取，不访问磁盘
+      if (_hashData.TryGetValue(key, out var hash))
+      {
+          return hash.TryGetValue(field, out var value) ? value : null;
+      }
+      return null;
+  }
+
+6. CheckAutoSave - 定时保存检查（仅Interval模式）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  位置: LocalDataStorage.cs 第251-272行
+
+  public void CheckAutoSave()
+  {
+      // 立即保存模式不需要检查
+      if (_saveMode == SaveMode.Instant)
+      {
+          return;
+      }
+
+      // 数据未修改，不需要保存
+      if (!_isDirty)
+      {
+          return;
+      }
+
+      var timeSinceLastSave = DateTime.Now - _lastSaveTime;
+
+      // 按照配置的间隔保存
+      if (timeSinceLastSave.TotalHours >= _saveIntervalHours)
+      {
+          LogInfo($"[LocalStorage] 触发定时保存 (距上次保存: {timeSinceLastSave.TotalHours:F1}小时)");
+          SaveToDisk();
+      }
+  }
+
+【数据流程图】
+────────────────────────────────────────────────────────────────
+
+Instant 立即保存模式:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  客户端请求 (SetJson)
+      ↓
+  GameServer.HandleSetJson()
+      ↓
+  _storage.HashSet(key, field, value)
+      ↓
+  ┌─────────────────────────────────┐
+  │ 1. 写入内存 ConcurrentDictionary │
+  │ 2. _isDirty = true              │
+  │ 3. SaveToDisk() ← 立即调用!      │
+  └─────────────────────────────────┘
+      ↓
+  写入 hash_data.json
+      ↓
+  客户端收到响应
+
+  特点: 每次请求都触发磁盘写入
+
+Interval 定时保存模式:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  客户端请求 (SetJson)
+      ↓
+  GameServer.HandleSetJson()
+      ↓
+  _storage.HashSet(key, field, value)
+      ↓
+  ┌─────────────────────────────────┐
+  │ 1. 写入内存 ConcurrentDictionary │
+  │ 2. _isDirty = true              │
+  │ 3. return ← 不调用 SaveToDisk   │
+  └─────────────────────────────────┘
+      ↓
+  客户端收到响应 ← 立即返回，快速响应!
+      ↓
+  (等待定时检查...)
+      ↓
+  GameService.Tick()
+      ↓
+  CheckAutoSave()
+      ↓
+  距上次保存 >= 24小时?
+      ↓ (是)
+  SaveToDisk()
+      ↓
+  写入 hash_data.json
+
+  特点: 客户端请求快速返回，后台定时保存
+
+数据读取 (两种模式相同):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  客户端请求 (GetJson)
+      ↓
+  GameServer.HandleGetJson()
+      ↓
+  _storage.HashGet(key, field)
+      ↓
+  从内存读取 ConcurrentDictionary ← 不访问磁盘!
+      ↓
+  返回数据给客户端
+
+  特点: 永远从内存读取，速度极快
+
+【测试步骤】
+────────────────────────────────────────────────────────────────
+
+测试立即保存模式:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1. 修改 GameService.cs
+     使用: new LocalDataStorage("Data", SaveMode.Instant)
+
+  2. 重新编译并启动服务端
+     观察日志:
+       [LocalStorage] 保存模式: 立即保存模式（每次请求都保存）
+
+  3. 连接客户端，进行数据操作
+     - 保存公司数据
+     - 购买股票
+     - 修改员工信息
+
+  4. 观察服务端日志
+     应该看到:
+       [GameServer] SetJson Hash - Key: company, Field: xxx, Length: 456
+       [LocalStorage] 数据保存成功 - String: 2条, Hash: 3个  ← 立即保存!
+
+  5. 立即检查磁盘文件
+     位置: GameCompanyServer\Data\hash_data.json
+     ✓ 文件应该立即更新
+     ✓ 包含最新的操作数据
+     ✓ 修改时间是当前时间
+
+测试定时保存模式:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1. 修改 GameService.cs
+     使用: new LocalDataStorage("Data", SaveMode.Interval, saveIntervalHours: 1)
+     (测试时使用1小时便于观察)
+
+  2. 重新编译并启动服务端
+     观察日志:
+       [LocalStorage] 保存模式: 定时保存模式（每1小时保存一次）
+
+  3. 连接客户端，进行数据操作
+     - 保存公司数据
+     - 购买股票
+
+  4. 观察服务端日志
+     应该看到:
+       [GameServer] SetJson Hash - Key: company, Field: xxx, Length: 456
+       (没有立即保存日志)
+
+  5. 立即检查磁盘文件
+     ✓ 文件不会立即更新
+     ✓ 但客户端重新连接时能读取到最新数据（因为在内存中）
+
+  6. 等待1小时或手动触发保存
+     等待1小时后，应该看到:
+       [LocalStorage] 触发定时保存 (距上次保存: 1.0小时)
+       [LocalStorage] 数据保存成功 - String: 2条, Hash: 3个
+
+测试内存优先读取:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1. 使用 Interval 模式（1小时）
+  2. 保存一些数据（公司、员工）
+  3. 不要等待保存，立即断开客户端
+  4. 重新连接客户端
+  5. 尝试读取刚才保存的数据
+  6. 验证结果:
+     ✓ 数据能正常读取（从内存）
+     ✓ 磁盘文件还未更新
+     ✓ 说明读取优先从内存获取
+
+【预期日志】
+────────────────────────────────────────────────────────────────
+
+立即保存模式:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  [LocalStorage] 加载String数据成功: 1 条记录
+  [LocalStorage] 加载Hash数据成功: 2 个Hash表
+  [LocalStorage] 初始化默认利率: 0.05 (5%)
+  [LocalStorage] 保存模式: 立即保存模式（每次请求都保存）  ← 立即模式
+  [GameService] LocalDataStorage 初始化完成
+  [GameServer] 服务器启动成功 - 端口: 45677
+  ...
+  [GameServer] SetJson Hash - Key: company, Field: player_001, Length: 456
+  [LocalStorage] 数据保存成功 - String: 1条, Hash: 3个  ← 立即保存
+  [GameServer] BuyStock - 玩家: player_001, 股票: 腾讯(001), 数量: 10
+  [LocalStorage] 数据保存成功 - String: 1条, Hash: 4个  ← 立即保存
+
+定时保存模式 (24小时):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  [LocalStorage] 加载String数据成功: 1 条记录
+  [LocalStorage] 加载Hash数据成功: 2 个Hash表
+  [LocalStorage] 初始化默认利率: 0.05 (5%)
+  [LocalStorage] 保存模式: 定时保存模式（每24小时保存一次）  ← 定时模式
+  [GameService] LocalDataStorage 初始化完成
+  [GameServer] 服务器启动成功 - 端口: 45677
+  ...
+  [GameServer] SetJson Hash - Key: company, Field: player_001, Length: 456
+  [GameServer] BuyStock - 玩家: player_001, 股票: 腾讯(001), 数量: 10
+  (等待24小时...)
+  [LocalStorage] 触发定时保存 (距上次保存: 24.1小时)
+  [LocalStorage] 数据保存成功 - String: 1条, Hash: 4个  ← 定时保存
+
+服务器关闭时 (两种模式相同):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  [GameService] 正在卸载服务...
+  [GameServer] 正在关闭服务器...
+  [GameServer] 服务器已关闭
+  [GameService] GameServer 已关闭
+  [LocalStorage] 强制保存数据
+  [LocalStorage] 数据保存成功 - String: 1条, Hash: 4个  ← 强制保存
+  [GameService] LocalDataStorage 数据已保存
+  [GameService] 服务卸载完成
+
+【修改的文件】
+────────────────────────────────────────────────────────────────
+服务端:
+  ✓ GameCompanyServer\World Server\Storage\LocalDataStorage.cs
+    - 添加 SaveMode 枚举
+    - 构造函数添加 saveMode 参数
+    - StringSet/HashSet 根据模式决定是否立即保存
+    - StringGet/HashGet 注释说明从内存读取
+    - CheckAutoSave 只在 Interval 模式下工作
+    - 添加 GetSaveMode() 和 GetSaveIntervalHours() 方法
+
+  ✓ GameCompanyServer\World Server\Servc\GameService.cs
+    - Init() 方法添加配置区域
+    - 提供三种配置示例（立即/24小时/1小时）
+    - 添加醒目的注释框，便于修改
+
+【推荐配置】
+────────────────────────────────────────────────────────────────
+
+开发测试阶段:
+  ✓ 使用 SaveMode.Instant
+  ✓ 便于实时查看数据文件
+  ✓ 便于调试和验证功能
+
+生产环境:
+  ✓ 使用 SaveMode.Interval，间隔24小时
+  ✓ 减少磁盘IO，提高性能
+  ✓ 配合定期备份策略
+
+频繁测试:
+  ✓ 使用 SaveMode.Interval，间隔1小时
+  ✓ 平衡性能和数据安全
+  ✓ 可以在较短时间内验证保存功能
+
+【总结】
+────────────────────────────────────────────────────────────────
+
+核心特性:
+  ✓ 所有数据操作立即在内存中完成
+  ✓ 所有读取优先从内存获取
+  ✓ 支持两种保存模式：立即 / 定时
+  ✓ 配置简单，只需修改一行代码
+  ✓ 服务器关闭时强制保存，数据不丢失
+
+性能对比:
+  Instant:  数据安全 ★★★★★ | 性能 ★★☆☆☆ | 适合测试
+  Interval: 数据安全 ★★★☆☆ | 性能 ★★★★★ | 适合生产
+
+现在您可以根据需要轻松切换保存模式了！✓

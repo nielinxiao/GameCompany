@@ -1,0 +1,87 @@
+﻿#include "pch-c.h"
+
+
+#include "codegen/il2cpp-codegen-metadata.h"
+
+
+
+
+
+extern void Grid_get_cellSize_m5512593532CABA9CFC058123B923AFA483D6003E (void);
+extern void Grid_set_cellSize_m9868F4574C37B62CE64E8AF776E085B54F2F1BF8 (void);
+extern void Grid_get_cellGap_m9B12CA3DA5A7AC906A1E1943FABD3E1A523439A1 (void);
+extern void Grid_set_cellGap_m7DFD489B9B17CE724B56B05AB0639B99F79A3D02 (void);
+extern void Grid_get_cellLayout_m68897E54C769C732FC091914D07E312BC9244358 (void);
+extern void Grid_set_cellLayout_m61FEB7CE68F4598356DFD0B564BFF8B15F6A7766 (void);
+extern void Grid_get_cellSwizzle_m8F68B475BAA2554A80C06CAA7EDC36009E9ED5E6 (void);
+extern void Grid_set_cellSwizzle_mEA7F3096C6537707CC8A1EE5FBB86AD7D68D2F5A (void);
+extern void Grid_get_cellSize_Injected_mAA6A2B2F7C979279AEC73D5D82A20851E3F11A9B (void);
+extern void Grid_set_cellSize_Injected_m3EC0BFC4C489310B197C1DC73ECE6DF734C46123 (void);
+extern void Grid_get_cellGap_Injected_m9613E7B62D3FC53FB02D6EF8A6E128E80601ED65 (void);
+extern void Grid_set_cellGap_Injected_m6B798A9EDFD34F16331593008F04C7A63D60CFB7 (void);
+extern void Grid_get_cellLayout_Injected_mD4B3872A9A56BDC2DD6BE537893F42F09F4AC4DE (void);
+extern void Grid_set_cellLayout_Injected_m9340DA32E980F104F2E6AE4CE4AEE126AD649801 (void);
+extern void Grid_get_cellSwizzle_Injected_mBCD5F75524D29FF7C89690EB9AC5B4BF29C7BB0E (void);
+extern void Grid_set_cellSwizzle_Injected_m5D923B73FB8E7842A83B22199CFA1595885C4610 (void);
+extern void GridLayout_DoNothing_mA280987BF98D257023D46C2C01902FC82EE6A00A (void);
+static Il2CppMethodPointer s_methodPointers[17] = 
+{
+	Grid_get_cellSize_m5512593532CABA9CFC058123B923AFA483D6003E,
+	Grid_set_cellSize_m9868F4574C37B62CE64E8AF776E085B54F2F1BF8,
+	Grid_get_cellGap_m9B12CA3DA5A7AC906A1E1943FABD3E1A523439A1,
+	Grid_set_cellGap_m7DFD489B9B17CE724B56B05AB0639B99F79A3D02,
+	Grid_get_cellLayout_m68897E54C769C732FC091914D07E312BC9244358,
+	Grid_set_cellLayout_m61FEB7CE68F4598356DFD0B564BFF8B15F6A7766,
+	Grid_get_cellSwizzle_m8F68B475BAA2554A80C06CAA7EDC36009E9ED5E6,
+	Grid_set_cellSwizzle_mEA7F3096C6537707CC8A1EE5FBB86AD7D68D2F5A,
+	Grid_get_cellSize_Injected_mAA6A2B2F7C979279AEC73D5D82A20851E3F11A9B,
+	Grid_set_cellSize_Injected_m3EC0BFC4C489310B197C1DC73ECE6DF734C46123,
+	Grid_get_cellGap_Injected_m9613E7B62D3FC53FB02D6EF8A6E128E80601ED65,
+	Grid_set_cellGap_Injected_m6B798A9EDFD34F16331593008F04C7A63D60CFB7,
+	Grid_get_cellLayout_Injected_mD4B3872A9A56BDC2DD6BE537893F42F09F4AC4DE,
+	Grid_set_cellLayout_Injected_m9340DA32E980F104F2E6AE4CE4AEE126AD649801,
+	Grid_get_cellSwizzle_Injected_mBCD5F75524D29FF7C89690EB9AC5B4BF29C7BB0E,
+	Grid_set_cellSwizzle_Injected_m5D923B73FB8E7842A83B22199CFA1595885C4610,
+	GridLayout_DoNothing_mA280987BF98D257023D46C2C01902FC82EE6A00A,
+};
+static const int32_t s_InvokerIndices[17] = 
+{
+	15821,
+	12670,
+	15821,
+	12670,
+	15538,
+	12388,
+	15538,
+	12388,
+	22903,
+	22903,
+	22903,
+	22903,
+	25187,
+	22907,
+	25187,
+	22907,
+	15832,
+};
+IL2CPP_EXTERN_C const Il2CppCodeGenModule g_UnityEngine_GridModule_CodeGenModule;
+const Il2CppCodeGenModule g_UnityEngine_GridModule_CodeGenModule = 
+{
+	"UnityEngine.GridModule.dll",
+	17,
+	s_methodPointers,
+	0,
+	NULL,
+	s_InvokerIndices,
+	0,
+	NULL,
+	0,
+	NULL,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};

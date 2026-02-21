@@ -1,0 +1,88 @@
+﻿#include "pch-c.h"
+
+
+#include "codegen/il2cpp-codegen-metadata.h"
+
+
+
+
+
+extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_m016AF9BABAD17276595B90F285D1C90645C6974D (void);
+extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mFC3212C02F636CDB4D035B33DE079410B8597D83 (void);
+extern void TapTapLoginImpl__ctor_mD2701023CF5CAB43892D75986DF62760F5E24646 (void);
+extern void TapTapLoginImpl_Init_m252116422E967704F3E2F6E647595BC2E51342A4 (void);
+extern void TapTapLoginImpl_Login_mBBB8F303CA27F3481EE6D13877CF1AF08D820D55 (void);
+extern void TapTapLoginImpl_Logout_mAC9D851EF18E022FD67DEBFA6E4DFEC3908497D5 (void);
+extern void TapTapLoginImpl_GetCurrentAccount_m3F0ACAC9E7C663422D470323524999CB869A6E16 (void);
+extern void U3CU3Ec__DisplayClass3_0__ctor_m45C04AA9BF149FCC0BA0B477BEEE822C93A68004 (void);
+extern void U3CU3Ec__DisplayClass3_0_U3CLoginU3Eb__0_m706F01A839C5E7C2C6D7749B69F99D49E182D54B (void);
+extern void U3CGetCurrentAccountU3Ed__5_MoveNext_m65BA5A17A007A76ECEDDDFE3A4FBAA4225B16074 (void);
+extern void U3CGetCurrentAccountU3Ed__5_SetStateMachine_m74ACF9A7749A33EDB1DED905C33445A0385A53C7 (void);
+extern void AccountWrapper_get_code_m453742F813B0224C96E76606DDB80B24948891E4 (void);
+extern void AccountWrapper_get_message_m10674625269B5C58E5E86D0BD3ABC74DDB7ED8DB (void);
+extern void AccountWrapper_get_account_mCA44D16CD8DA4E9747FD5F2BA31F3F54EEF9FD01 (void);
+extern void AccountWrapper__ctor_m7A0BE5EC4CFCD184AAA7198CF4388ED21501710E (void);
+static Il2CppMethodPointer s_methodPointers[15] = 
+{
+	UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_m016AF9BABAD17276595B90F285D1C90645C6974D,
+	UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mFC3212C02F636CDB4D035B33DE079410B8597D83,
+	TapTapLoginImpl__ctor_mD2701023CF5CAB43892D75986DF62760F5E24646,
+	TapTapLoginImpl_Init_m252116422E967704F3E2F6E647595BC2E51342A4,
+	TapTapLoginImpl_Login_mBBB8F303CA27F3481EE6D13877CF1AF08D820D55,
+	TapTapLoginImpl_Logout_mAC9D851EF18E022FD67DEBFA6E4DFEC3908497D5,
+	TapTapLoginImpl_GetCurrentAccount_m3F0ACAC9E7C663422D470323524999CB869A6E16,
+	U3CU3Ec__DisplayClass3_0__ctor_m45C04AA9BF149FCC0BA0B477BEEE822C93A68004,
+	U3CU3Ec__DisplayClass3_0_U3CLoginU3Eb__0_m706F01A839C5E7C2C6D7749B69F99D49E182D54B,
+	U3CGetCurrentAccountU3Ed__5_MoveNext_m65BA5A17A007A76ECEDDDFE3A4FBAA4225B16074,
+	U3CGetCurrentAccountU3Ed__5_SetStateMachine_m74ACF9A7749A33EDB1DED905C33445A0385A53C7,
+	AccountWrapper_get_code_m453742F813B0224C96E76606DDB80B24948891E4,
+	AccountWrapper_get_message_m10674625269B5C58E5E86D0BD3ABC74DDB7ED8DB,
+	AccountWrapper_get_account_mCA44D16CD8DA4E9747FD5F2BA31F3F54EEF9FD01,
+	AccountWrapper__ctor_m7A0BE5EC4CFCD184AAA7198CF4388ED21501710E,
+};
+extern void U3CGetCurrentAccountU3Ed__5_MoveNext_m65BA5A17A007A76ECEDDDFE3A4FBAA4225B16074_AdjustorThunk (void);
+extern void U3CGetCurrentAccountU3Ed__5_SetStateMachine_m74ACF9A7749A33EDB1DED905C33445A0385A53C7_AdjustorThunk (void);
+static Il2CppTokenAdjustorThunkPair s_adjustorThunks[2] = 
+{
+	{ 0x0600000A, U3CGetCurrentAccountU3Ed__5_MoveNext_m65BA5A17A007A76ECEDDDFE3A4FBAA4225B16074_AdjustorThunk },
+	{ 0x0600000B, U3CGetCurrentAccountU3Ed__5_SetStateMachine_m74ACF9A7749A33EDB1DED905C33445A0385A53C7_AdjustorThunk },
+};
+static const int32_t s_InvokerIndices[15] = 
+{
+	27047,
+	15832,
+	15832,
+	6922,
+	10868,
+	15832,
+	15611,
+	15832,
+	12463,
+	15832,
+	12463,
+	15538,
+	15611,
+	15611,
+	12463,
+};
+IL2CPP_EXTERN_C const Il2CppCodeGenModule g_TapSDK_Login_Mobile_Runtime_CodeGenModule;
+const Il2CppCodeGenModule g_TapSDK_Login_Mobile_Runtime_CodeGenModule = 
+{
+	"TapSDK.Login.Mobile.Runtime.dll",
+	15,
+	s_methodPointers,
+	2,
+	s_adjustorThunks,
+	s_InvokerIndices,
+	0,
+	NULL,
+	0,
+	NULL,
+	0,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};

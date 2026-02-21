@@ -1,0 +1,133 @@
+using System;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+using Utility;
+
+/// <summary>
+/// 在Console窗口添加导出按钮 - 创建独立工具栏不影响原有工具栏
+/// </summary>
+[InitializeOnLoad]
+public static class ConsoleWindowToolbar
+{
+    private static Type consoleWindowType;
+    private static EditorWindow consoleWindow;
+    private static bool initialized = false;
+
+    static ConsoleWindowToolbar()
+    {
+        consoleWindowType = Type.GetType("UnityEditor.ConsoleWindow,UnityEditor");
+        EditorApplication.update += Initialize;
+        EditorApplication.quitting += Cleanup;
+    }
+
+    private static void Cleanup()
+    {
+        EditorApplication.update -= Initialize;
+    }
+
+    private static void Initialize()
+    {
+        if (initialized)
+        {
+            // 检查Console窗口是否还存在
+            if (consoleWindow == null)
+            {
+                initialized = false;
+            }
+            return;
+        }
+
+        if (consoleWindowType == null)
+            return;
+
+        // 查找Console窗口
+        var windows = Resources.FindObjectsOfTypeAll(consoleWindowType);
+        if (windows == null || windows.Length == 0)
+            return;
+
+        consoleWindow = windows[0] as EditorWindow;
+        if (consoleWindow == null)
+            return;
+
+        try
+        {
+            var rootVisualElement = consoleWindow.rootVisualElement;
+            if (rootVisualElement == null)
+                return;
+
+            // 添加独立工具栏
+            if (TryAddIndependentToolbar(rootVisualElement))
+            {
+                initialized = true;
+                Debug.Log("<color=green>✓ Console导出按钮已添加</color>");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"添加Console导出按钮失败: {ex.Message}");
+        }
+    }
+
+    private static bool TryAddIndependentToolbar(VisualElement root)
+    {
+        // 检查是否已添加
+        if (root.Q("ConsoleExportToolbar") != null)
+            return true;
+
+        // 创建独立的工具栏容器，放在最顶部，不影响原有内容
+        var container = new VisualElement
+        {
+            name = "ConsoleExportToolbar",
+            style =
+            {
+                flexDirection = FlexDirection.Row,
+                height = 22,
+                paddingTop = 2,
+                paddingBottom = 2,
+                paddingLeft = 8,
+                paddingRight = 8,
+                backgroundColor = new Color(0.25f, 0.25f, 0.25f),
+                borderBottomWidth = 1,
+                borderBottomColor = new Color(0.1f, 0.1f, 0.1f),
+                alignItems = Align.Center
+            }
+        };
+
+        // 添加导出按钮
+        var exportButton = new Button(() => ConsoleLogExporter.ExportEditorConsoleLog())
+        {
+            name = "ConsoleExportButton",
+            text = "📄 导出JSON",
+            tooltip = "一键导出Console日志为JSON格式\n文件路径自动复制到剪切板\n\n快捷键: Alt+L"
+        };
+
+        // 设置按钮样式
+        exportButton.style.height = 18;
+        exportButton.style.unityTextAlign = TextAnchor.MiddleCenter;
+        exportButton.style.paddingLeft = 10;
+        exportButton.style.paddingRight = 10;
+        exportButton.style.fontSize = 11;
+
+        container.Add(exportButton);
+
+        // 添加提示文本
+        var hint = new Label("(路径自动复制)")
+        {
+            style =
+            {
+                fontSize = 10,
+                marginLeft = 8,
+                color = new Color(0.7f, 0.7f, 0.7f),
+                unityTextAlign = TextAnchor.MiddleLeft
+            }
+        };
+        container.Add(hint);
+
+        // 插入到根元素的最前面，这样不会影响原有的Console工具栏
+        root.Insert(0, container);
+
+        return true;
+    }
+}

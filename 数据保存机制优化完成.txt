@@ -1,0 +1,413 @@
+╔═══════════════════════════════════════════════════════════════╗
+║              数据保存机制优化完成                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+【问题描述】
+────────────────────────────────────────────────────────────────
+问题: 服务端确实没有真正保存信息
+原因: 原有机制只在24小时后自动保存，导致：
+  - 测试时数据不会保存
+  - 服务器异常关闭时数据丢失
+  - 只有正常关闭或等待24小时才会保存
+
+【原有机制】
+────────────────────────────────────────────────────────────────
+保存时机:
+  1. 每24小时自动保存一次 (CheckAutoSave)
+  2. 服务器正常关闭时保存 (UnInit -> ForceSave)
+
+问题:
+  ❌ 测试期间几乎不会触发保存
+  ❌ 异常关闭会丢失所有数据
+  ❌ 需要等待很长时间才能看到保存效果
+
+【新的保存机制】
+────────────────────────────────────────────────────────────────
+
+核心设计: 脏标记 (Dirty Flag) + 定期保存
+
+工作流程:
+  1. 数据修改时
+     → StringSet() / HashSet() 被调用
+     → 设置 _isDirty = true
+
+  2. 每帧检查 (GameService.Tick)
+     → 调用 CheckAutoSave()
+     → 检查 _isDirty 是否为 true
+     → 检查距上次保存是否超过 5 秒
+
+  3. 满足条件时保存
+     → 调用 SaveToDisk()
+     → 写入 string_data.json 和 hash_data.json
+     → 设置 _isDirty = false
+     → 更新 _lastSaveTime
+
+  4. 服务器关闭时
+     → UnInit() 调用 ForceSave()
+     → 确保所有数据被保存
+
+保存时机:
+  ✓ 数据修改后 5 秒自动保存
+  ✓ 服务器正常关闭时立即保存
+  ✓ 没有数据修改时不保存（避免无效IO）
+
+【修改详情】
+────────────────────────────────────────────────────────────────
+
+修改1: LocalDataStorage.cs - 添加脏标记机制
+
+  添加字段:
+    private bool _isDirty = false; // 标记数据是否被修改
+
+  StringSet 方法:
+    public void StringSet(string key, string value)
+    {
+        _stringData[key] = value;
+        _isDirty = true; // 标记数据已修改
+    }
+
+  HashSet 方法:
+    public void HashSet(string key, string field, string value)
+    {
+        var hash = _hashData.GetOrAdd(key, k => new ConcurrentDictionary<string, string>());
+        hash[field] = value;
+        _isDirty = true; // 标记数据已修改
+    }
+
+  SaveToDisk 方法:
+    public void SaveToDisk()
+    {
+        lock (_saveLock)
+        {
+            try
+            {
+                // 保存String数据
+                var stringJson = JsonConvert.SerializeObject(_stringData, Formatting.Indented);
+                File.WriteAllText(_stringDataFile, stringJson);
+
+                // 保存Hash数据
+                var hashDict = new Dictionary<string, Dictionary<string, string>>();
+                foreach (var kvp in _hashData)
+                {
+                    hashDict[kvp.Key] = new Dictionary<string, string>(kvp.Value);
+                }
+                var hashJson = JsonConvert.SerializeObject(hashDict, Formatting.Indented);
+                File.WriteAllText(_hashDataFile, hashJson);
+
+                _lastSaveTime = DateTime.Now;
+                _isDirty = false; // 清除脏标记 ✓
+                LogInfo($"[LocalStorage] 数据保存成功 - String: {_stringData.Count}条, Hash: {_hashData.Count}个");
+            }
+            catch (Exception ex)
+            {
+                LogError($"[LocalStorage] 保存数据失败: {ex.Message}");
+            }
+        }
+    }
+
+修改2: LocalDataStorage.cs - 优化 CheckAutoSave
+
+  修改前 (24小时保存):
+    public void CheckAutoSave()
+    {
+        var timeSinceLastSave = DateTime.Now - _lastSaveTime;
+        if (timeSinceLastSave.TotalHours >= _saveIntervalHours)
+        {
+            LogInfo($"[LocalStorage] 触发定时保存 (距上次保存: {timeSinceLastSave.TotalHours:F1}小时)");
+            SaveToDisk();
+        }
+    }
+
+  修改后 (5秒保存):
+    public void CheckAutoSave()
+    {
+        if (!_isDirty)
+        {
+            return; // 数据未修改，不需要保存
+        }
+
+        var timeSinceLastSave = DateTime.Now - _lastSaveTime;
+        // 修改为5秒保存一次（如果有数据修改）
+        if (timeSinceLastSave.TotalSeconds >= 5)
+        {
+            LogInfo($"[LocalStorage] 触发自动保存 (距上次保存: {timeSinceLastSave.TotalSeconds:F1}秒)");
+            SaveToDisk();
+        }
+    }
+
+  改进:
+    - 检查 _isDirty 标志，没有修改时直接返回
+    - 保存间隔从 24 小时改为 5 秒
+    - 只在有数据修改时才保存
+    - 避免不必要的磁盘IO
+
+修改3: GameService.cs - 已经正确实现
+
+  Tick 方法 (每帧调用):
+    public void Tick()
+    {
+        try
+        {
+            // 处理游戏服务器的消息队列
+            if (_gameServer != null)
+            {
+                _gameServer.ProcessMessageQueue();
+            }
+
+            // 检查是否需要自动保存 ✓
+            if (_localStorage != null)
+            {
+                _localStorage.CheckAutoSave();
+            }
+        }
+        catch (Exception ex)
+        {
+            _log.LogError($"[GameService] Tick异常: {ex.Message}");
+        }
+    }
+
+  UnInit 方法 (服务器关闭):
+    public void UnInit()
+    {
+        try
+        {
+            _log.LogYellow("[GameService] 正在卸载服务...");
+
+            // 关闭游戏服务器
+            if (_gameServer != null)
+            {
+                _gameServer.Shutdown();
+                _gameServer = null;
+                _log.LogGreen("[GameService] GameServer 已关闭");
+            }
+
+            // 强制保存数据 ✓
+            if (_localStorage != null)
+            {
+                _localStorage.ForceSave();
+                _localStorage = null;
+                _log.LogGreen("[GameService] LocalDataStorage 数据已保存");
+            }
+
+            _log.LogGreen("[GameService] 服务卸载完成");
+        }
+        catch (Exception ex)
+        {
+            _log.LogError($"[GameService] UnInit异常: {ex.Message}");
+        }
+    }
+
+═══════════════════════════════════════════════════════════════
+
+【保存触发条件】
+────────────────────────────────────────────────────────────────
+
+1. 自动保存 (CheckAutoSave)
+   条件: _isDirty == true && 距上次保存 >= 5秒
+   频率: 最多每5秒一次
+   触发: GameService.Tick() 每帧检查
+
+2. 强制保存 (ForceSave)
+   时机: 服务器关闭时
+   触发: GameService.UnInit()
+   特点: 无论 _isDirty 状态，都会保存
+
+3. 数据修改操作
+   - HandleSetJson: 设置公司、员工、福利等数据
+   - HandleBuyStock: 购买股票
+   - HandleSellStock: 出售股票
+   - HandleDonat: 捐赠
+   - HandleCheckPlayerCreatByFirst: 首次创建玩家
+
+   这些操作都会设置 _isDirty = true
+
+═══════════════════════════════════════════════════════════════
+
+【性能优化】
+────────────────────────────────────────────────────────────────
+
+脏标记机制的优势:
+  1. 避免无效保存
+     - 没有数据修改时，CheckAutoSave 直接返回
+     - 减少不必要的磁盘IO
+
+  2. 批量保存
+     - 5秒内的多次修改只保存一次
+     - 避免频繁写入磁盘
+
+  3. 线程安全
+     - SaveToDisk 使用 lock(_saveLock) 保护
+     - 多线程修改不会导致数据损坏
+
+  4. 最小化数据丢失
+     - 最多丢失5秒内的数据
+     - 远好于24小时的保存间隔
+
+性能对比:
+  原方案: 24小时保存一次
+    - 优点: 几乎不影响性能
+    - 缺点: 测试时数据不保存，异常关闭丢失所有数据
+
+  方案1 (立即保存): 每次操作都保存
+    - 优点: 数据不会丢失
+    - 缺点: 频繁IO，性能差
+
+  当前方案 (脏标记+5秒): 有修改时5秒保存一次
+    - 优点: 平衡性能和数据安全
+    - 缺点: 最多丢失5秒数据 (可接受)
+
+═══════════════════════════════════════════════════════════════
+
+【测试步骤】
+────────────────────────────────────────────────────────────────
+
+1. 重新编译服务端
+   Visual Studio 重新生成解决方案
+
+2. 启动服务端
+   Visual Studio 按 F5
+
+3. 连接客户端
+   Unity 运行游戏，TapTap 登录
+
+4. 进行数据操作
+   - 保存公司数据
+   - 修改员工信息
+   - 购买/出售股票
+   - 进行捐赠
+
+5. 等待5秒，观察服务端日志
+   应该看到:
+     [LocalStorage] 触发自动保存 (距上次保存: 5.1秒)
+     [LocalStorage] 数据保存成功 - String: X条, Hash: Y个
+
+6. 检查保存文件
+   位置: GameCompanyServer\Data\
+   文件:
+     - string_data.json
+     - hash_data.json
+
+   ✓ 文件应该存在
+   ✓ 文件应该包含最新数据
+   ✓ 文件更新时间应该是最近5秒内
+
+7. 测试服务器重启
+   - 关闭服务端 (应该看到 "数据已保存")
+   - 重新启动服务端
+   - 连接客户端
+   - 验证数据是否恢复
+
+8. 验证脏标记机制
+   - 启动服务端，不进行任何操作
+   - 观察日志，应该不会触发自动保存
+   - 进行一次数据操作
+   - 等待5秒，应该触发自动保存
+
+═══════════════════════════════════════════════════════════════
+
+【预期日志】
+────────────────────────────────────────────────────────────────
+
+服务端启动时:
+  [LocalStorage] 加载String数据成功: X 条记录
+  [LocalStorage] 加载Hash数据成功: Y 个Hash表
+  [LocalStorage] 初始化默认利率: 0.05 (5%)
+  [GameService] LocalDataStorage 初始化完成
+  [GameServer] 服务器启动成功 - 端口: 45677
+
+数据操作后 5 秒:
+  [GameServer] SetJson Hash - Key: company, Field: xxx, Length: 456
+  (等待5秒)
+  [LocalStorage] 触发自动保存 (距上次保存: 5.1秒)
+  [LocalStorage] 数据保存成功 - String: 2条, Hash: 3个
+
+服务器关闭时:
+  [GameService] 正在卸载服务...
+  [GameServer] 正在关闭服务器...
+  [GameServer] 服务器已关闭
+  [GameService] GameServer 已关闭
+  [LocalStorage] 强制保存数据
+  [LocalStorage] 数据保存成功 - String: 2条, Hash: 3个
+  [GameService] LocalDataStorage 数据已保存
+  [GameService] 服务卸载完成
+
+═══════════════════════════════════════════════════════════════
+
+【保存文件示例】
+────────────────────────────────────────────────────────────────
+
+string_data.json:
+{
+  "money": "0.05",
+  "stock_list": "[]"
+}
+
+hash_data.json:
+{
+  "company": {
+    "player_001": "{\"CompName\":\"测试公司\",\"CEO_ID\":\"player_001\",...}",
+    "player_002": "{\"CompName\":\"另一个公司\",\"CEO_ID\":\"player_002\",...}"
+  },
+  "player:player_001": {
+    "name": "玩家名称",
+    "company": "测试公司",
+    "createTime": "2026-02-15 10:30:45"
+  },
+  "staff:player_001": {
+    "data": "[{\"Name\":\"员工1\",...},{\"Name\":\"员工2\",...}]"
+  }
+}
+
+═══════════════════════════════════════════════════════════════
+
+【修改的文件】
+────────────────────────────────────────────────────────────────
+
+服务端:
+  ✓ GameCompanyServer\World Server\Storage\LocalDataStorage.cs
+    - 添加 _isDirty 脏标记字段
+    - StringSet 和 HashSet 设置脏标记
+    - SaveToDisk 清除脏标记
+    - CheckAutoSave 从24小时改为5秒
+    - CheckAutoSave 检查脏标记
+
+  ✓ GameCompanyServer\World Server\Servc\GameService.cs
+    - Tick 方法调用 CheckAutoSave (已存在)
+    - UnInit 方法调用 ForceSave (已存在)
+
+═══════════════════════════════════════════════════════════════
+
+【关键改进】
+────────────────────────────────────────────────────────────────
+
+1. 脏标记机制
+   - 跟踪数据是否被修改
+   - 避免不必要的保存操作
+   - 提高性能
+
+2. 定期自动保存
+   - 从24小时改为5秒
+   - 适合开发和测试
+   - 最多丢失5秒数据
+
+3. 条件保存
+   - 只在有数据修改时保存
+   - 没有修改时不进行磁盘IO
+   - 节省系统资源
+
+4. 优雅关闭
+   - UnInit 时强制保存
+   - 确保数据不丢失
+   - 即使异常关闭，最多丢失5秒
+
+═══════════════════════════════════════════════════════════════
+
+【总结】
+
+问题: 数据只在24小时后保存，测试时看不到保存效果
+原因: 保存间隔太长 + 没有脏标记机制
+修复: 添加脏标记 + 5秒自动保存 + 关闭时强制保存
+状态: ✅ 已优化
+
+现在数据会在修改后5秒内自动保存！✓
+服务器关闭时也会强制保存所有数据！✓

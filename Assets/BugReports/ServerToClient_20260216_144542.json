@@ -1,0 +1,7 @@
+﻿{
+  "需求名": "ValueToken 空键兜底在单监听场景会误匹配 ReturnJson",
+  "需求提出时间": "2026-02-16 14:45:42",
+  "需求内容": "### Bug描述\n**位置:** 客户端 `RedisSystem.cs` 的 [176] GetValue（`C:\\Users\\Nie\\Desktop\\GameCompany\\Assets\\Scripts\\SetUp\\System\\RedisSystem.cs:176`）\n**严重性:** 高\n\n### 问题详情\n当服务端回包 `JsonDicKey` 为空时，`ValueToken.GetValue` 会在“当前命令监听数等于1”的条件下把回包键强制回填为本地 `Key`（`returnedJsonDictionaryKey = Key`）。\n这会把无关的 `ReturnJson` 回包误判为匹配成功，从而提前触发回调并移除监听。\n\n### 复现步骤\n1. 注册一个 `ServerCMD.ReturnJson` 监听并等待 `GetJson` 结果。\n2. 在真实查询回包到达前，先收到一个未带 `JsonDicKey` 的 `ReturnJson`（如 `SetJson` 保存成功回包）。\n3. 由于当前监听数为1，代码进入兜底分支并强制匹配成功。\n4. 真实查询回包到达时监听已被移除，造成结果丢失。\n\n### 期望行为\n当 `JsonDicKey` 为空时，不应通过监听数量推断匹配成功；应拒绝消费该回包，或使用显式请求标识进行严格匹配。",
+  "需求是否完成": true,
+  "解决方案": "已完成修复。\n\n### 修改位置\n- 文件: `C:\\\\Users\\\\Nie\\\\Desktop\\\\GameCompany\\\\Assets\\\\Scripts\\\\SetUp\\\\System\\\\RedisSystem.cs`\n- 方法: `[173] GetValue(Pkg pkg)`\n\n### 之前的问题\n- 原逻辑在 `JsonDicKey` 为空时，会读取 `GameRoot.iocpSystem.ServerCallBack` 的监听数量。\n- 当监听数量等于 1 时，强制执行 `returnedJsonDictionaryKey = Key`，把空键回包当成当前请求成功回包。\n- 这会误消费无关 `ReturnJson`（例如 `SetJson` 的回包），导致真实查询回包到达时监听已被移除。\n\n### 修复内容\n- 删除“监听数量=1时用本地 Key 兜底匹配”的整段分支。\n- 改为：`JsonDicKey` 为空时直接 `return`，不触发回调、不移除监听。\n- 保留原有严格匹配：仅当 `returnedJsonDictionaryKey == Key` 时，才执行回调并调用 `RemoveListener`。\n\n### 修复后的行为\n1. 空键 `ReturnJson` 不会再被误判为当前查询结果。\n2. 只有携带正确 `JsonDicKey` 的回包才会命中当前 `ValueToken`。\n3. 真实查询回包不会因提前移除监听而丢失。\n\n### 复用说明\n- 复用了已有匹配参数：`Key`、`serverCMD`。\n- 复用了已有监听生命周期方法：`GameRoot.iocpSystem.RemoveListener(serverCMD, GetValue)`。\n- 未新增类、未新增协议字段、未改变现有权限修饰符。"
+}

@@ -1,0 +1,410 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7193d246901226b4383f90acb87106d2, type: 3}
+  m_Name: BuildPrefabs
+  m_EditorClassIdentifier: 
+  buildPrefab_Elements:
+  - name: "\u5730\u677F"
+    UrlName: BuildPrefab_Plane
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 15
+    buildType: 0
+  - name: "\u5C0F\u6C99\u53D1\u3010\u84DD\u3011"
+    UrlName: Char
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 1
+    buildType: 1
+  - name: "\u5899\u58C1"
+    UrlName: Wall1_01
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 15
+    buildType: 0
+  - name: "\u5899\u95E8"
+    UrlName: Wall1_02
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 15
+    buildType: 0
+  - name: "\u9AD8\u6276\u624B\u6C99\u53D1\u3010\u9EC4\u3011"
+    UrlName: Armchair1_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u5C0F\u6C99\u53D1\u3010\u7EA2\u3011"
+    UrlName: Armchair2_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u5C0F\u6C99\u53D1\u3010\u9ED1\u3011"
+    UrlName: Armchair2_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u5927\u4E66\u67B6\u3010\u767D\u3011"
+    UrlName: BookCase1_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u5927\u4E66\u67B6\u3010\u9EC4\u3011"
+    UrlName: BookCase1_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u5927\u4E66\u67B6\u3010\u9ED1\u3011"
+    UrlName: BookCase1_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u957F\u4E66\u67B6\u3010\u767D\u3011"
+    UrlName: BookCase2_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u957F\u4E66\u67B6\u3010\u9EC4\u3011"
+    UrlName: BookCase2_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u957F\u4E66\u67B6\u3010\u9ED1\u3011"
+    UrlName: BookCase2_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u8863\u67DC\u3010\u9ED1\u3011"
+    UrlName: Cabinet1_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u8863\u67DC\u3010\u767D\u3011"
+    UrlName: Cabinet1_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u8863\u67DC\u3010\u9EC4\u3011"
+    UrlName: Cabinet1_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u6905\u5B50\u3010\u9ED1\u3011"
+    UrlName: Chair_01
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u8863\u67B6\u3010\u767D\u3011"
+    UrlName: ClothesRack1_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u8863\u67B6\u3010\u9ED1\u3011"
+    UrlName: ClothesRack1_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u957F\u684C\u3010\u9ED1\u3011"
+    UrlName: ConferenceTable_01
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u957F\u684C\u3010\u767D\u3011"
+    UrlName: ConferenceTable_02
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u692D\u5706\u684C"
+    UrlName: ConferenceTable_03
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "L\u5F62\u684C\u3010\u7070\u3011"
+    UrlName: CornerDesk1_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "L\u5F62\u684C\u3010\u9EC4\u3011"
+    UrlName: CornerDesk1_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "L\u5F62\u684C\u3010\u767D\u3011"
+    UrlName: CornerDesk1_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u5DE5\u4F5C\u53F0"
+    UrlName: Desk1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u4E66\u684C\u3010\u7070\u3011"
+    UrlName: Desk2_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u4E66\u684C\u3010\u68D5\u3011"
+    UrlName: Desk2_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u4E66\u684C\u3010\u767D\u3011"
+    UrlName: Desk2_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u684C\u5B50\u3010\u7070\u3011"
+    UrlName: Desk3_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u684C\u5B50\u3010\u9EC4\u3011"
+    UrlName: Desk3_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u684C\u5B50\u3010\u767D\u3011"
+    UrlName: Desk3_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u67DC\u5B50\u3010\u7070\u3011"
+    UrlName: Drawer1_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u67DC\u5B50\u3010\u68D5\u3011"
+    UrlName: Drawer1_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u67DC\u5B50\u3010\u767D\u3011"
+    UrlName: Drawer1_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u73BB\u7483\u95E8"
+    UrlName: GlassPartition_01
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u843D\u5730\u7A97"
+    UrlName: GlassPartition_02
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u5355\u5C42\u9694\u95F4"
+    UrlName: Partition1_01
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u56DB\u4EBA\u9694\u95F4"
+    UrlName: Partition1_02
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u516B\u4EBA\u9694\u95F4"
+    UrlName: Partition1_03
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u516B\u4EBA\u9694\u95F4\u3010\u5E26\u5916\u5C42\u9694\u95F4\u3011"
+    UrlName: Partition1_04
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u4ED9\u4EBA\u638C"
+    UrlName: Partition2_01
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "U\u5F62\u684C\u3010\u7070\u3011"
+    UrlName: Reception_01
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "U\u5F62\u684C\u3010\u68D5\u3011"
+    UrlName: Reception_02
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u978B\u67DC\u3010\u7070\u3011"
+    UrlName: Shelf1_C1_01
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u978B\u67DC\u3010\u68D5\u3011"
+    UrlName: Shelf1_C2_01
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u4E66\u67B6\u3010\u767D\u3011"
+    UrlName: Shelf2_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u4E66\u67B6\u3010\u68D5\u3011"
+    UrlName: Shelf2_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u4E66\u67B6\u3010\u9ED1\u3011"
+    UrlName: Shelf2_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u8D44\u6599\u67B6\u3010\u767D\u3011"
+    UrlName: Shelf3_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u8D44\u6599\u67B6\u3010\u7070\u3011"
+    UrlName: Shelf3_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u8D44\u6599\u67B6\u3010\u9ED1\u3011"
+    UrlName: Shelf3_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u5706\u684C\u3010\u767D\u3011"
+    UrlName: SideTable1_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u5706\u684C\u3010\u68D5\u3011"
+    UrlName: SideTable1_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u82B1\u76C6\u67B6\u3010\u68D5\u3011"
+    UrlName: SideTable2_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u82B1\u76C6\u67B6\u3010\u9EC4\u3011"
+    UrlName: SideTable2_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u77EE\u684C\u3010\u9ED1\u3011"
+    UrlName: SideTable3_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u77EE\u684C\u3010\u767D\u3011"
+    UrlName: SideTable3_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u77EE\u684C\u3010\u68D5\u3011"
+    UrlName: SideTable3_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 2
+  - name: "\u6C99\u53D1\u3010\u9ED1\u3011"
+    UrlName: Sofa1_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u6C99\u53D1\u3010\u7070\u3011"
+    UrlName: Sofa1_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u6C99\u53D1\u3010\u6A58\u3011"
+    UrlName: Sofa2_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u957F\u6C99\u53D1\u3010\u7070\u3011"
+    UrlName: Sofa2_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u53CC\u5217\u4E09\u5C42\u62BD\u5C49\u67DC\u5B50\u3010\u9ED1\u3011"
+    UrlName: Storage1_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u53CC\u5217\u4E09\u5C42\u62BD\u5C49\u67DC\u5B50\u3010\u767D\u3011"
+    UrlName: Storage1_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u53CC\u5217\u4E09\u5C42\u62BD\u5C49\u67DC\u5B50\u3010\u68D5\u3011"
+    UrlName: Storage1_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u5355\u5217\u4E09\u5C42\u62BD\u5C49\u67DC\u3010\u9ED1\u3011"
+    UrlName: Storage2_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u5355\u5217\u4E09\u5C42\u62BD\u5C49\u67DC\u3010\u767D\u3011"
+    UrlName: Storage2_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u5355\u5217\u4E09\u5C42\u62BD\u5C49\u67DC\u3010\u68D5\u3011"
+    UrlName: Storage2_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u53CC\u5217\u53CC\u5C42\u62BD\u5C49\u67DC\u3010\u9ED1\u3011"
+    UrlName: Storage3_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u53CC\u5217\u53CC\u5C42\u62BD\u5C49\u67DC\u3010\u767D\u3011"
+    UrlName: Storage3_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u53CC\u5217\u53CC\u5C42\u62BD\u5C49\u67DC\u3010\u68D5\u3011"
+    UrlName: Storage3_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 0
+  - name: "\u529E\u516C\u6276\u624B\u6905\u3010\u9ED1\u3011"
+    UrlName: WorkChair1_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u529E\u516C\u6905\u3010\u9752\u3011"
+    UrlName: WorkChair2_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u529E\u516C\u6905\u3010\u9ED1\u3011"
+    UrlName: WorkChair2_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u529E\u516C\u6905\u3010\u9EC4\u3011"
+    UrlName: WorkChair2_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u529E\u516C\u6276\u624B\u6905\u3010\u68D5\u3011"
+    UrlName: WorkChair3_C1
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u529E\u516C\u6276\u624B\u6905\u3010\u9ED1\u3011"
+    UrlName: WorkChair3_C2
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1
+  - name: "\u529E\u516C\u6276\u624B\u6905\u3010\u9EC4\u3011"
+    UrlName: WorkChair3_C3
+    UrlSpriteName: DuiHuaKeMeng
+    UseMoney: 10
+    buildType: 1

@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Settings
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 2dd1fda707b202d4dafe4b0a9503cf9c, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - dff0ddb091b521940af42e13278586f7: 21300000
+    - c2a91e31716cd8e46bf582a2361c20a4: 21300000
+    - bc02d0b3602d4df4e8ffe62738a99702: 21300000
+    - 72de810426ddcfb41a5d6984897292fe: 21300000
+    - 79f816d4e2b71194bbb1d55b7ab777cb: 21300000
+    - 43a69d4542cc5e9418c688eee12e64f7: 21300000
+    - 9778ee387d7bcaa4385ad1c2a0d45588: 21300000
+    - 6639e31918770e4438cefbdb206dcb22: 21300000
+    - 254725bbd2f770a44aab1c710cbef4ac: 21300000
+    - 91434c0ca98400a418bdce221826267c: 21300000
+    - 6ecdd40d7d92fbb46961d777008009fd: 21300000
+    - a97f7d6d6c683724c8902b82c8364917: 21300000
+    - b8a884dde3684ef458bea6f4ec407fda: 21300000
+    - 08999d8ed61ed3b4ba5256a808864cca: 21300000
+    - 5b30f9de272609b4891baa241bf88206: 21300000
+    - a80e796ffae799b4097e3adfbabefa40: 21300000
+    - d3dba9bf1f86e194e9251f16bccfa1e1: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: dff0ddb091b521940af42e13278586f7, type: 3}
+  - {fileID: 21300000, guid: c2a91e31716cd8e46bf582a2361c20a4, type: 3}
+  - {fileID: 21300000, guid: bc02d0b3602d4df4e8ffe62738a99702, type: 3}
+  - {fileID: 21300000, guid: 72de810426ddcfb41a5d6984897292fe, type: 3}
+  - {fileID: 21300000, guid: 79f816d4e2b71194bbb1d55b7ab777cb, type: 3}
+  - {fileID: 21300000, guid: 43a69d4542cc5e9418c688eee12e64f7, type: 3}
+  - {fileID: 21300000, guid: 9778ee387d7bcaa4385ad1c2a0d45588, type: 3}
+  - {fileID: 21300000, guid: 6639e31918770e4438cefbdb206dcb22, type: 3}
+  - {fileID: 21300000, guid: 254725bbd2f770a44aab1c710cbef4ac, type: 3}
+  - {fileID: 21300000, guid: 91434c0ca98400a418bdce221826267c, type: 3}
+  - {fileID: 21300000, guid: 6ecdd40d7d92fbb46961d777008009fd, type: 3}
+  - {fileID: 21300000, guid: a97f7d6d6c683724c8902b82c8364917, type: 3}
+  - {fileID: 21300000, guid: b8a884dde3684ef458bea6f4ec407fda, type: 3}
+  - {fileID: 21300000, guid: 08999d8ed61ed3b4ba5256a808864cca, type: 3}
+  - {fileID: 21300000, guid: 5b30f9de272609b4891baa241bf88206, type: 3}
+  - {fileID: 21300000, guid: a80e796ffae799b4097e3adfbabefa40, type: 3}
+  - {fileID: 21300000, guid: d3dba9bf1f86e194e9251f16bccfa1e1, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - "\u7834\u574F"
+  - IconUser
+  - AdsIcon
+  - ic_gift_open
+  - ic_gift_close
+  - ic_envelop_open
+  - attr_info
+  - console-64
+  - Company
+  - "\u221A"
+  - clipboard-50
+  - MatrixRoom
+  - UICommon_Inventory
+  - 01
+  - ic_envelop_close
+  - "\xD7"
+  - matrixTurretIcon
+  m_RenderDataMap: {}
+  m_Tag: Settings
+  m_IsVariant: 0

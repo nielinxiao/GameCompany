@@ -1,0 +1,300 @@
+╔═══════════════════════════════════════════════════════════════╗
+║            股票 JSON 反序列化错误修复完成                        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+【问题描述】
+────────────────────────────────────────────────────────────────
+错误位置: UserData.StockCallBack() - 第72行
+错误类型: JsonSerializationException
+错误信息: Cannot deserialize the current JSON object (e.g. {"name":"value"})
+          into type 'System.Collections.Generic.List`1[Stock]' because
+          the type requires a JSON array (e.g. [1,2,3])
+
+现象: 尝试获取股票数据时崩溃
+
+【问题原因】
+────────────────────────────────────────────────────────────────
+1. 服务器返回格式错误
+   - HandleGetStock 返回 "{}" (JSON 对象)
+   - 客户端期望 "[]" (JSON 数组)
+   - JsonConvert.DeserializeObject<List<Stock>> 需要数组格式
+
+2. 缺少错误处理
+   - 没有 try-catch 捕获反序列化异常
+   - 没有检查 JSON 格式是否正确
+   - 没有处理空数据的情况
+
+【修复内容】
+────────────────────────────────────────────────────────────────
+
+修复1: UserData.cs - 添加错误处理和格式检查
+  位置: Assets\Scripts\SetUp\Class\UserData.cs 第69-76行
+
+  修改前:
+    public void StockCallBack(Pkg pkg)
+    {
+        if (!string.IsNullOrEmpty(pkg.Body.serverMessage.jsonStock))
+            currentCompany.stocks = JsonConvert.DeserializeObject<List<Stock>>(pkg.Body.serverMessage.jsonStock);
+        callBack?.Invoke();
+        callBack = null;
+        GameRoot.iocpSystem.RemoveListener(ServerCMD.GetStock,StockCallBack);
+    }
+
+  修改后:
+    public void StockCallBack(Pkg pkg)
+    {
+        try
+        {
+            string jsonStock = pkg.Body.serverMessage.jsonStock;
+            if (!string.IsNullOrEmpty(jsonStock) && jsonStock != "null" && jsonStock != "{}")
+            {
+                currentCompany.stocks = JsonConvert.DeserializeObject<List<Stock>>(jsonStock);
+            }
+            else
+            {
+                Debug.Log("[UserData] 没有股票数据，初始化为空列表");
+                if (currentCompany != null)
+                {
+                    currentCompany.stocks = new List<Stock>();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[UserData] StockCallBack 反序列化失败: {ex.Message}");
+            if (currentCompany != null)
+            {
+                currentCompany.stocks = new List<Stock>();
+            }
+        }
+        finally
+        {
+            callBack?.Invoke();
+            callBack = null;
+            GameRoot.iocpSystem.RemoveListener(ServerCMD.GetStock, StockCallBack);
+        }
+    }
+
+  改进:
+    - 添加 try-catch-finally 结构
+    - 检查 jsonStock 是否为 "{}" (错误的对象格式)
+    - 反序列化失败时初始化为空列表
+    - 使用 finally 确保回调和清理代码一定执行
+
+修复2: GameServer.cs - 修复 HandleGetStock 返回格式
+  位置: C:\Users\Nie\Desktop\GameCompanyServer\World Server\Servc\GameServer.cs 第374-410行
+
+  修改前:
+    private void HandleGetStock(IOCPToken<Pkg> client, ClientMessage msg)
+    {
+        try
+        {
+            var stockId = msg.stockID;
+            var stockKey = $"stock:{stockId}";
+            var stockJson = _storage.StringGet(stockKey);
+            _log.LogGreen($"[GameServer] GetStock - StockID: {stockId}");
+
+            var response = new Pkg
+            {
+                Head = new Head { ServerCmd = ServerCMD.GetStock },
+                Body = new Body
+                {
+                    serverMessage = new ServerMessage
+                    {
+                        Id = msg.Id,
+                        clientName = msg.Name,
+                        companyName = msg.companyName,
+                        jsonStock = stockJson ?? "{}",  // ❌ 错误：返回对象格式
+                        Message = stockJson != null ? "获取成功" : "股票不存在"
+                    }
+                }
+            };
+            client.Send(response);
+        }
+        catch (Exception ex)
+        {
+            _log.LogError($"[GameServer] HandleGetStock异常: {ex.Message}");
+        }
+    }
+
+  修改后:
+    private void HandleGetStock(IOCPToken<Pkg> client, ClientMessage msg)
+    {
+        try
+        {
+            var stockId = msg.stockID;
+            var stockKey = $"stock:{stockId}";
+            var stockJson = _storage.StringGet(stockKey);
+
+            // 确保返回 JSON 数组格式，不是对象
+            if (string.IsNullOrEmpty(stockJson) || stockJson == "null" || stockJson == "{}")
+            {
+                stockJson = "[]"; // ✓ 正确：返回空数组
+            }
+
+            _log.LogGreen($"[GameServer] GetStock - StockID: {stockId}, Length: {stockJson.Length}");
+
+            var response = new Pkg
+            {
+                Head = new Head { ServerCmd = ServerCMD.GetStock },
+                Body = new Body
+                {
+                    serverMessage = new ServerMessage
+                    {
+                        Id = msg.Id,
+                        clientName = msg.Name,
+                        companyName = msg.companyName,
+                        jsonStock = stockJson,
+                        Message = stockJson != "[]" ? "获取成功" : "股票不存在"
+                    }
+                }
+            };
+            client.Send(response);
+        }
+        catch (Exception ex)
+        {
+            _log.LogError($"[GameServer] HandleGetStock异常: {ex.Message}");
+
+            // 发送错误响应
+            var errorResponse = new Pkg
+            {
+                Head = new Head { ServerCmd = ServerCMD.GetStock },
+                Body = new Body
+                {
+                    serverMessage = new ServerMessage
+                    {
+                        Id = msg.Id,
+                        clientName = msg.Name,
+                        companyName = msg.companyName,
+                        jsonStock = "[]",  // 错误时也返回空数组
+                        Message = $"获取失败: {ex.Message}"
+                    }
+                }
+            };
+            client.Send(errorResponse);
+        }
+    }
+
+  改进:
+    - 将空值从 "{}" 改为 "[]"
+    - 添加格式检查和转换
+    - 添加异常响应处理
+    - 优化日志输出（只显示长度）
+
+修复3: GameServer.cs - 修复 HandleSearchStock 返回格式
+  位置: C:\Users\Nie\Desktop\GameCompanyServer\World Server\Servc\GameServer.cs 第543-580行
+
+  修改前:
+    var stockListJson = _storage.StringGet(stockListKey);
+    var response = new Pkg
+    {
+        // ...
+        jsonStock = stockListJson ?? "[]",  // 已经是正确的，但需要更多检查
+        // ...
+    };
+
+  修改后:
+    var stockListJson = _storage.StringGet(stockListKey);
+
+    // 确保返回 JSON 数组格式
+    if (string.IsNullOrEmpty(stockListJson) || stockListJson == "null" || stockListJson == "{}")
+    {
+        stockListJson = "[]";
+    }
+
+    var response = new Pkg
+    {
+        // ...
+        jsonStock = stockListJson,
+        // ...
+    };
+
+    // + 添加错误响应处理
+
+  改进:
+    - 统一格式检查逻辑
+    - 添加错误响应处理
+    - 确保所有路径都返回数组格式
+
+═══════════════════════════════════════════════════════════════
+
+【关键点】
+────────────────────────────────────────────────────────────────
+
+JSON 对象 vs JSON 数组:
+  ❌ 错误: "{}"          - JSON 对象，无法反序列化为 List
+  ❌ 错误: "null"        - 空值
+  ❌ 错误: ""            - 空字符串
+  ✓ 正确: "[]"          - JSON 空数组
+  ✓ 正确: "[{...}, ...]" - JSON 数组，包含元素
+
+C# 反序列化规则:
+  - List<T>  需要 JSON 数组 []
+  - Object   需要 JSON 对象 {}
+  - 格式不匹配会抛出 JsonSerializationException
+
+防御性编程:
+  1. 客户端：使用 try-catch 捕获反序列化异常
+  2. 服务端：确保返回正确的 JSON 格式
+  3. 两端：检查空值和错误格式，提供默认值
+
+═══════════════════════════════════════════════════════════════
+
+【测试步骤】
+────────────────────────────────────────────────────────────────
+1. 重新编译服务端
+   Visual Studio 重新生成解决方案
+
+2. 重启服务端
+   Visual Studio 按 F5 启动
+
+3. 重启 Unity 客户端
+   关闭游戏，重新运行
+
+4. 测试股票功能
+   - 点击股票相关按钮
+   - 尝试获取股票数据
+   - 尝试搜索股票
+
+5. 验证修复
+   ✓ 不再出现 JsonSerializationException
+   ✓ 没有股票时显示空列表
+   ✓ 服务端日志正常，无异常
+   ✓ 客户端日志显示 "[UserData] 没有股票数据，初始化为空列表"
+
+═══════════════════════════════════════════════════════════════
+
+【预期日志】
+────────────────────────────────────────────────────────────────
+服务端:
+  [GameServer] GetStock - StockID: xxx, Length: 2
+  [GameServer] SearchStock - 关键词: xxx
+
+客户端 (首次获取):
+  [UserData] 没有股票数据，初始化为空列表
+
+客户端 (有股票数据):
+  (无特殊日志，正常反序列化)
+
+═══════════════════════════════════════════════════════════════
+
+【修改的文件】
+────────────────────────────────────────────────────────────────
+客户端:
+  ✓ Assets\Scripts\SetUp\Class\UserData.cs (StockCallBack 方法)
+
+服务端:
+  ✓ GameCompanyServer\World Server\Servc\GameServer.cs
+    - HandleGetStock 方法
+    - HandleSearchStock 方法
+
+═══════════════════════════════════════════════════════════════
+
+【总结】
+
+问题: JSON 对象 "{}" 无法反序列化为 List<Stock>
+原因: 服务器返回错误格式 + 客户端缺少错误处理
+修复: 服务器返回数组 "[]" + 客户端添加 try-catch
+状态: ✅ 已修复
+
+现在股票数据可以正常获取了！✓

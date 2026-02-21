@@ -1,0 +1,7 @@
+﻿{
+  "需求名": "HandleSetJson 回包缺少 JsonDicKey 导致 ReturnJson 无法准确关联",
+  "需求提出时间": "2026-02-16 14:45:42",
+  "需求内容": "### Bug描述\n**位置:** 服务端 `GameServer.cs` 的 [350] HandleSetJson（`C:\\Users\\Nie\\Desktop\\GameCompanyServer\\World Server\\Servc\\GameServer.cs:399`）\n**严重性:** 高\n\n### 问题详情\n`HandleSetJson` 成功回包与异常回包都使用 `ServerCMD.ReturnJson`，但未设置 `JsonDicKey`。\n当客户端存在并发 `ReturnJson` 监听时，无法依据键值判断回包归属，存在误消费风险。\n\n### 复现步骤\n1. 客户端发起一次 `GetValueAsync(...)`，注册 `ServerCMD.ReturnJson` 监听。\n2. 在查询回包到达前，触发一次 `SetValueAsync(...)`。\n3. 服务端先返回 `HandleSetJson` 的 `ReturnJson`（仅 `Message=保存成功`，未带 `JsonDicKey`）。\n4. 客户端无法准确关联回包归属，可能导致查询监听被误触发或错过真正查询结果。\n\n### 期望行为\n`HandleSetJson` 的成功/失败回包应携带与请求一致的 `JsonDicKey`（至少提供可匹配键）。",
+  "需求是否完成": false,
+  "解决方案": ""
+}

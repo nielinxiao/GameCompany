@@ -1,0 +1,268 @@
+╔═══════════════════════════════════════════════════════════════╗
+║              服务端调试日志已添加                                ║
+╚═══════════════════════════════════════════════════════════════╝
+
+【添加的调试日志位置】
+────────────────────────────────────────────────────────────────
+
+1. LocalDataStorage.StringSet() - 详细日志
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   输出信息:
+     - StringSet 调用 - Key, Value长度
+     - 写入内存成功 - Key, 内存中共有N个String键
+     - 立即保存模式 - 准备调用 SaveToDisk()
+     或
+     - 定时保存模式 - 已设置脏标记，等待定时保存
+
+2. LocalDataStorage.HashSet() - 详细日志
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   输出信息:
+     - HashSet 调用 - Key, Field, Value长度
+     - 写入内存成功 - Key, Field, 该Hash表有N个字段, 内存中共有N个Hash表
+     - 立即保存模式 - 准备调用 SaveToDisk()
+     或
+     - 定时保存模式 - 已设置脏标记，等待定时保存
+
+3. LocalDataStorage.SaveToDisk() - 超详细日志
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   输出信息:
+     ═══ SaveToDisk 开始 ═══
+     - 脏标记: true/false, 保存模式: Instant/Interval
+     - 内存数据统计 - String: N条, Hash: N个
+     - 准备序列化数据...
+     - 序列化String数据... (N条)
+     - String JSON长度: N字符
+     - 写入String文件: 文件路径
+     - String文件写入成功 - 大小: N字节, 修改时间: 时间
+     - 序列化Hash数据... (N个Hash表)
+       - Hash表 'key1': N个字段
+       - Hash表 'key2': N个字段
+     - Hash JSON长度: N字符
+     - 写入Hash文件: 文件路径
+     - Hash文件写入成功 - 大小: N字节, 修改时间: 时间
+     ✓✓✓ 数据保存成功 - String: N条, Hash: N个 ✓✓✓
+     - 清除脏标记，更新保存时间: 时间
+     ═══ SaveToDisk 结束 ═══
+
+   如果出错:
+     ✗✗✗ 保存数据失败 ✗✗✗
+     - 异常类型: ExceptionType
+     - 异常消息: 错误消息
+     - 堆栈跟踪: 完整堆栈
+
+4. GameServer.HandleSetJson() - 详细日志
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   输出信息:
+     ═══ HandleSetJson 开始 ═══
+     - 玩家: ID (名称)
+     - JsonKey: xxx, JsonDicKey: xxx, JsonDoubleKey: xxx
+     - SetJson Hash操作 - Key: xxx, Field: xxx, Value长度: N
+     - Value预览: 前100个字符...
+     - 调用 _storage.HashSet()...
+     - _storage.HashSet() 返回
+     - 发送响应给客户端...
+     - 响应已发送
+     ═══ HandleSetJson 结束 ═══
+
+5. GameServer.ProcessMessage() - 增强日志
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   输出信息:
+     ►►► 收到命令: SetJson, 玩家: player_001 (玩家名称)
+
+【测试步骤】
+────────────────────────────────────────────────────────────────
+
+1. 确认当前保存模式
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   检查 GameService.cs 第31行:
+     _localStorage = new LocalDataStorage("Data", SaveMode.Instant);
+
+   确认是 SaveMode.Instant（立即保存模式）
+
+2. 重新编译服务端
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Visual Studio 重新生成解决方案
+
+3. 清空旧数据（如果需要）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   关闭服务端
+   删除 GameCompanyServer\Data\ 文件夹下的 .json 文件
+
+4. 启动服务端
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Visual Studio 按 F5
+   观察启动日志:
+     [LocalStorage] 保存模式: 立即保存模式（每次请求都保存）
+
+5. 启动客户端
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Unity 运行游戏
+   TapTap 登录
+   进入主场景
+
+6. 执行保存操作
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   - 保存公司数据
+   - 修改员工信息
+   - 购买股票
+   - 等任何会触发数据保存的操作
+
+7. 观察服务端控制台日志
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   查看完整的数据流程日志（见下方"预期日志"）
+
+【预期日志示例】
+────────────────────────────────────────────────────────────────
+
+客户端保存公司数据时的完整日志:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[GameServer] ►►► 收到命令: SetJson, 玩家: player_001 (测试玩家)
+[GameServer] ═══ HandleSetJson 开始 ═══
+[GameServer] 玩家: player_001 (测试玩家)
+[GameServer] JsonKey: , JsonDicKey: company, JsonDoubleKey: player_001
+[GameServer] SetJson Hash操作 - Key: company, Field: player_001, Value长度: 234
+[GameServer] Value预览: {"CompName":"测试公司","CEO_ID":"player_001","personCount_Company":0,...
+[GameServer] 调用 _storage.HashSet()...
+
+[LocalStorage] HashSet 调用 - Key: company, Field: player_001, Value长度: 234
+[LocalStorage] HashSet 写入内存成功 - Key: company, Field: player_001, 该Hash表有 1 个字段, 内存中共有 1 个Hash表
+[LocalStorage] 立即保存模式 - 准备调用 SaveToDisk()
+
+[LocalStorage] ═══ SaveToDisk 开始 ═══
+[LocalStorage] 脏标记: True, 保存模式: Instant
+[LocalStorage] 内存数据统计 - String: 1条, Hash: 1个
+[LocalStorage] 准备序列化数据...
+[LocalStorage] 序列化String数据... (1条)
+[LocalStorage] String JSON长度: 45字符
+[LocalStorage] 写入String文件: C:\Users\Nie\Desktop\GameCompanyServer\Data\string_data.json
+[LocalStorage] String文件写入成功 - 大小: 47字节, 修改时间: 2026-02-15 14:30:25
+[LocalStorage] 序列化Hash数据... (1个Hash表)
+[LocalStorage]   - Hash表 'company': 1个字段
+[LocalStorage] Hash JSON长度: 298字符
+[LocalStorage] 写入Hash文件: C:\Users\Nie\Desktop\GameCompanyServer\Data\hash_data.json
+[LocalStorage] Hash文件写入成功 - 大小: 304字节, 修改时间: 2026-02-15 14:30:25
+[LocalStorage] ✓✓✓ 数据保存成功 - String: 1条, Hash: 1个 ✓✓✓
+[LocalStorage] 清除脏标记，更新保存时间: 2026-02-15 14:30:25
+[LocalStorage] ═══ SaveToDisk 结束 ═══
+
+[GameServer] _storage.HashSet() 返回
+[GameServer] 发送响应给客户端...
+[GameServer] 响应已发送
+[GameServer] ═══ HandleSetJson 结束 ═══
+
+【诊断指南】
+────────────────────────────────────────────────────────────────
+
+问题1: 如果没有看到 "收到命令: SetJson"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   可能原因:
+     - 客户端没有发送请求
+     - 网络连接问题
+     - 客户端使用了错误的IP/端口
+
+   解决方法:
+     - 检查客户端是否连接成功
+     - 检查客户端日志是否有发送记录
+     - 确认服务端端口 45677
+
+问题2: 如果看到 "收到命令" 但没有 "HandleSetJson 开始"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   可能原因:
+     - ProcessMessage 中的 switch 没有匹配到 SetJson
+     - ClientCMD 枚举值不匹配
+
+   解决方法:
+     - 检查客户端发送的 ClientCmd 值
+     - 确认协议一致性
+
+问题3: 如果看到 "HashSet 调用" 但没有 "准备调用 SaveToDisk()"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   可能原因:
+     - 不是立即保存模式
+     - _saveMode != SaveMode.Instant
+
+   解决方法:
+     - 检查 GameService.cs 第31行
+     - 确认使用 SaveMode.Instant
+     - 重新编译
+
+问题4: 如果看到 "SaveToDisk 开始" 但没有 "数据保存成功"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   可能原因:
+     - 序列化失败
+     - 文件写入权限问题
+     - 磁盘空间不足
+
+   解决方法:
+     - 查看详细的异常日志
+     - 检查 Data 文件夹权限
+     - 确认磁盘空间
+
+问题5: 如果文件写入成功但文件不存在或大小为0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   可能原因:
+     - 文件被杀毒软件拦截
+     - 文件被其他程序锁定
+     - 路径不正确
+
+   解决方法:
+     - 检查杀毒软件日志
+     - 关闭可能锁定文件的程序
+     - 确认 Data 文件夹存在
+
+【关键检查点】
+────────────────────────────────────────────────────────────────
+
+✓ 保存模式配置
+  位置: GameService.cs 第31行
+  期望: SaveMode.Instant
+
+✓ 数据文件夹存在
+  位置: GameCompanyServer\Data\
+  权限: 可读写
+
+✓ 客户端发送请求
+  观察: 服务端日志 "收到命令: SetJson"
+
+✓ 内存写入成功
+  观察: "写入内存成功" 日志
+
+✓ SaveToDisk被调用
+  观察: "═══ SaveToDisk 开始 ═══" 日志
+
+✓ 文件真实写入
+  观察: "文件写入成功 - 大小: N字节" 日志
+  验证: 打开文件查看内容
+
+【日志收集】
+────────────────────────────────────────────────────────────────
+
+如果问题仍然存在，请提供完整的服务端日志:
+
+1. 从服务端启动开始
+2. 到执行保存操作
+3. 包含所有 [LocalStorage] 和 [GameServer] 日志
+
+复制整个控制台输出，发送给开发者分析。
+
+关键信息包括:
+  - 保存模式配置
+  - 是否收到客户端请求
+  - 是否写入内存
+  - 是否调用 SaveToDisk
+  - 文件是否真实写入
+  - 任何错误或异常
+
+【总结】
+────────────────────────────────────────────────────────────────
+
+添加的调试日志覆盖:
+  ✓ 客户端请求接收
+  ✓ 数据写入内存
+  ✓ 保存模式判断
+  ✓ SaveToDisk 调用
+  ✓ 文件序列化
+  ✓ 文件写入验证
+  ✓ 完整异常捕获
+
+现在可以精确定位数据保存流程中的问题了！

@@ -1,0 +1,125 @@
+================================================================
+                      JSON日志格式说明
+================================================================
+
+一、导出格式
+------------
+日志以JSON格式导出，便于程序解析和数据分析。
+
+二、文件命名
+------------
+Editor Console日志: EditorConsoleLog_YYYYMMDD_HHMMSS.json
+运行时日志:        RuntimeLog_YYYYMMDD_HHMMSS.json
+
+三、JSON结构示例
+----------------
+
+{
+  "exportTime": "2026-02-16 18:30:45",
+  "source": "UnityEditorConsole",
+  "totalLogs": 3,
+  "logs": [
+    {
+      "index": 1,
+      "timestamp": "2026-02-16 18:30:12.456",
+      "timestampUnix": 1708089012456,
+      "logType": "LOG",
+      "message": "游戏启动成功",
+      "stackTrace": "UnityEngine.Debug.Log (System.String message)\nGameManager.Start () (at Assets/Scripts/GameManager.cs:25)"
+    },
+    {
+      "index": 2,
+      "timestamp": "2026-02-16 18:30:15.789",
+      "timestampUnix": 1708089015789,
+      "logType": "WARNING",
+      "message": "材质丢失",
+      "file": "Assets/Scripts/ResourceLoader.cs",
+      "line": 128
+    },
+    {
+      "index": 3,
+      "timestamp": "2026-02-16 18:30:20.123",
+      "timestampUnix": 1708089020123,
+      "logType": "ERROR",
+      "message": "NullReferenceException: Object reference not set",
+      "stackTrace": "PlayerController.Update () (at Assets/Scripts/PlayerController.cs:67)"
+    }
+  ]
+}
+
+四、字段说明
+------------
+
+根节点字段:
+  - exportTime:      导出时间（格式: YYYY-MM-DD HH:MM:SS）
+  - source:          日志来源（UnityEditorConsole / RuntimeRecorder）
+  - totalLogs:       日志总数
+  - includeStackTrace: 是否包含堆栈跟踪（仅运行时日志）
+  - logs:            日志数组
+
+日志条目字段:
+  - index:           日志序号（从1开始）
+  - timestamp:       时间戳（可读格式）
+  - timestampUnix:   Unix时间戳（毫秒，用于排序和计算）
+  - logType:         日志类型（LOG / WARNING / ERROR / EXCEPTION / ASSERT）
+  - message:         日志消息内容
+  - stackTrace:      堆栈跟踪（可选，运行时日志支持）
+  - file:            源文件路径（可选，Editor Console日志）
+  - line:            行号（可选，Editor Console日志）
+
+五、日志类型
+------------
+- LOG:        普通日志（Debug.Log）
+- WARNING:    警告（Debug.LogWarning）
+- ERROR:      错误（Debug.LogError）
+- EXCEPTION:  异常（未捕获的异常）
+- ASSERT:     断言失败（Debug.Assert）
+
+六、使用场景
+------------
+
+1. 程序解析
+   使用任何支持JSON的编程语言快速解析日志
+
+   示例（Python）:
+   import json
+   with open('EditorConsoleLog_20260216_183045.json', 'r', encoding='utf-8') as f:
+       data = json.load(f)
+       print(f"总日志数: {data['totalLogs']}")
+       for log in data['logs']:
+           print(f"[{log['logType']}] {log['message']}")
+
+2. 数据分析
+   - 统计不同类型日志的数量
+   - 按时间分析日志分布
+   - 查找特定错误模式
+   - 生成日志报表
+
+3. 日志过滤
+   - 只提取ERROR类型的日志
+   - 按时间范围过滤
+   - 按关键词搜索
+
+4. 集成到工具链
+   - 导入到日志分析工具
+   - 集成到CI/CD流程
+   - 自动化测试报告生成
+
+七、优势
+--------
+✓ 结构化数据，易于程序解析
+✓ 支持UTF-8编码，完美显示中文
+✓ 包含时间戳，方便排序和时间分析
+✓ 完整的堆栈跟踪信息
+✓ 可直接导入数据库或分析工具
+
+八、注意事项
+------------
+1. JSON文件使用UTF-8编码保存
+2. 特殊字符已自动转义（引号、换行符等）
+3. Unix时间戳为毫秒级精度
+4. 建议使用JSON格式化工具查看大文件
+
+================================================================
+                        更新日期：2026-02-16
+================================================================

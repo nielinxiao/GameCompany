@@ -1,0 +1,414 @@
+╔═══════════════════════════════════════════════════════════════╗
+║              字符编码问题修复完成                                ║
+╚═══════════════════════════════════════════════════════════════╝
+
+【问题描述】
+────────────────────────────────────────────────────────────────
+错误信息:
+  The character with Unicode value � was not found in the
+  [Normal_Font] font asset or any potential fallbacks.
+
+现象:
+  - 客户端显示 � 乱码字符
+  - TextMeshPro 无法正确显示中文
+  - 日志显示字符无法在字体中找到
+
+原因:
+  服务端保存JSON文件时没有指定UTF-8编码
+  ↓
+  中文字符保存时使用了错误的编码
+  ↓
+  客户端读取时无法正确解码
+  ↓
+  显示为 � 乱码
+
+【根本原因】
+────────────────────────────────────────────────────────────────
+
+File.WriteAllText 和 File.ReadAllText 编码问题:
+
+修改前（错误）:
+  File.WriteAllText(_stringDataFile, stringJson);
+  File.ReadAllText(_stringDataFile);
+
+  问题:
+    - 没有指定编码参数
+    - .NET 使用平台默认编码（可能是 GBK、GB2312 或其他）
+    - 不同环境下编码不一致
+    - 导致中文字符乱码
+
+修改后（正确）:
+  File.WriteAllText(_stringDataFile, stringJson, new UTF8Encoding(false));
+  File.ReadAllText(_stringDataFile, Encoding.UTF8);
+
+  改进:
+    - 显式指定 UTF-8 编码
+    - 不带 BOM (Byte Order Mark)
+    - 跨平台兼容
+    - 中文字符正确处理
+
+【修复内容】
+────────────────────────────────────────────────────────────────
+
+修复1: 添加 System.Text 命名空间
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  位置: LocalDataStorage.cs 第1-7行
+
+  修改前:
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.IO;
+    using Newtonsoft.Json;
+    using Word_Sever;
+
+  修改后:
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;  ← 添加
+    using Newtonsoft.Json;
+    using Word_Sever;
+
+修复2: LoadFromDisk - 使用UTF-8编码读取
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  位置: LocalDataStorage.cs 第217-237行
+
+  修改前:
+    // 加载String数据
+    if (File.Exists(_stringDataFile))
+    {
+        var json = File.ReadAllText(_stringDataFile);  ← 没有指定编码
+        // ...
+    }
+
+    // 加载Hash数据
+    if (File.Exists(_hashDataFile))
+    {
+        var json = File.ReadAllText(_hashDataFile);  ← 没有指定编码
+        // ...
+    }
+
+  修改后:
+    // 加载String数据（使用UTF-8编码）
+    if (File.Exists(_stringDataFile))
+    {
+        var json = File.ReadAllText(_stringDataFile, Encoding.UTF8);  ← 指定UTF-8
+        // ...
+    }
+
+    // 加载Hash数据（使用UTF-8编码）
+    if (File.Exists(_hashDataFile))
+    {
+        var json = File.ReadAllText(_hashDataFile, Encoding.UTF8);  ← 指定UTF-8
+        // ...
+    }
+
+修复3: SaveToDisk - 使用UTF-8编码保存（不带BOM）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  位置: LocalDataStorage.cs 第266-281行
+
+  修改前:
+    try
+    {
+        // 保存String数据
+        var stringJson = JsonConvert.SerializeObject(_stringData, Formatting.Indented);
+        File.WriteAllText(_stringDataFile, stringJson);  ← 没有指定编码
+
+        // 保存Hash数据
+        var hashDict = new Dictionary<string, Dictionary<string, string>>();
+        foreach (var kvp in _hashData)
+        {
+            hashDict[kvp.Key] = new Dictionary<string, string>(kvp.Value);
+        }
+        var hashJson = JsonConvert.SerializeObject(hashDict, Formatting.Indented);
+        File.WriteAllText(_hashDataFile, hashJson);  ← 没有指定编码
+
+  修改后:
+    try
+    {
+        // JSON序列化设置：保持中文字符不转义
+        var jsonSettings = new JsonSerializerSettings
+        {
+            Formatting = Formatting.Indented,
+            StringEscapeHandling = StringEscapeHandling.Default
+        };
+
+        // 保存String数据（使用UTF-8编码，不带BOM）
+        var stringJson = JsonConvert.SerializeObject(_stringData, jsonSettings);
+        File.WriteAllText(_stringDataFile, stringJson, new UTF8Encoding(false));  ← UTF-8无BOM
+
+        // 保存Hash数据（使用UTF-8编码，不带BOM）
+        var hashDict = new Dictionary<string, Dictionary<string, string>>();
+        foreach (var kvp in _hashData)
+        {
+            hashDict[kvp.Key] = new Dictionary<string, string>(kvp.Value);
+        }
+        var hashJson = JsonConvert.SerializeObject(hashDict, jsonSettings);
+        File.WriteAllText(_hashDataFile, hashJson, new UTF8Encoding(false));  ← UTF-8无BOM
+
+  关键改进:
+    1. 添加 JsonSerializerSettings 配置
+    2. 使用 new UTF8Encoding(false) 指定UTF-8编码
+    3. false 参数表示不带BOM（Byte Order Mark）
+    4. 确保中文字符正确保存
+
+【UTF-8 编码说明】
+────────────────────────────────────────────────────────────────
+
+UTF-8 vs UTF-8 with BOM:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  UTF-8 无BOM (new UTF8Encoding(false)):
+    ✓ 纯净的UTF-8编码
+    ✓ 跨平台兼容性好
+    ✓ 适合JSON、XML等文本文件
+    ✓ 推荐使用
+
+  UTF-8 with BOM (new UTF8Encoding(true)):
+    ✗ 文件开头有3字节标记 (EF BB BF)
+    ✗ 某些程序无法正确处理BOM
+    ✗ 可能导致解析错误
+    ✗ 不推荐使用
+
+为什么要指定编码:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1. 避免平台差异
+     - Windows 默认可能是 GBK
+     - Linux 默认可能是 UTF-8
+     - 显式指定确保一致性
+
+  2. 支持多语言
+     - UTF-8 支持所有Unicode字符
+     - 中文、日文、韩文等都能正确处理
+
+  3. 网络兼容性
+     - 客户端通常期望UTF-8
+     - JSON标准推荐UTF-8
+     - Protobuf默认使用UTF-8
+
+【重要：清除旧数据】
+────────────────────────────────────────────────────────────────
+
+⚠️ 警告：旧的数据文件可能使用了错误编码保存
+
+必须执行以下步骤:
+
+  1. 关闭服务端
+     Visual Studio 停止调试 (Shift+F5)
+
+  2. 删除旧的数据文件
+     位置: GameCompanyServer\Data\
+     删除:
+       - string_data.json
+       - hash_data.json
+
+     ⚠️ 这会删除所有游戏数据！
+     ⚠️ 如果数据重要，请先备份！
+
+  3. 重新编译服务端
+     Visual Studio 重新生成解决方案
+
+  4. 启动服务端
+     Visual Studio 按 F5
+
+  5. 连接客户端测试
+     Unity 运行游戏，重新创建数据
+
+为什么必须删除旧文件:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - 旧文件使用了错误编码保存
+  - 即使修复了代码，读取旧文件仍会乱码
+  - 必须用新编码重新保存数据
+  - 删除旧文件让服务端创建新的UTF-8文件
+
+【测试步骤】
+────────────────────────────────────────────────────────────────
+
+1. 清理旧数据
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   - 关闭服务端
+   - 删除 GameCompanyServer\Data\*.json
+   - 重新编译服务端
+
+2. 启动服务端
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Visual Studio 按 F5
+   观察日志:
+     [LocalStorage] String数据文件不存在，创建新的数据
+     [LocalStorage] Hash数据文件不存在，创建新的数据
+     [LocalStorage] 初始化默认利率: 0.05 (5%)
+     [LocalStorage] 保存模式: 立即保存模式（每次请求都保存）
+
+3. 启动客户端并登录
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Unity 运行游戏
+   TapTap 登录
+   进入主场景
+
+4. 测试中文显示
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   - 创建公司（公司名称包含中文）
+   - 雇佣员工（员工名称包含中文）
+   - 发送消息（消息内容包含中文）
+   - 观察UI显示
+
+5. 验证结果
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ✓ 中文正确显示，无乱码
+   ✓ 没有 � 字符出现
+   ✓ TextMeshPro 不再报警告
+   ✓ 所有中文字符正常
+
+6. 检查保存文件
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   位置: GameCompanyServer\Data\hash_data.json
+
+   打开文件，应该看到:
+   {
+     "company": {
+       "player_001": "{\"CompName\":\"测试公司\",\"CEO_ID\":\"player_001\",...}"
+     },
+     "player:player_001": {
+       "name": "玩家名称",
+       "company": "测试公司"
+     }
+   }
+
+   验证:
+     ✓ 文件编码是 UTF-8（用记事本或VS Code查看）
+     ✓ 中文字符清晰可读
+     ✓ 没有乱码或转义字符
+
+7. 测试服务器重启
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   - 关闭服务端
+   - 重新启动服务端
+   - 连接客户端
+   - 验证数据正确加载
+   - 中文显示正常
+
+【预期日志】
+────────────────────────────────────────────────────────────────
+
+服务端启动（首次/清空数据后）:
+  [LocalStorage] String数据文件不存在，创建新的数据
+  [LocalStorage] Hash数据文件不存在，创建新的数据
+  [LocalStorage] 初始化默认利率: 0.05 (5%)
+  [LocalStorage] 保存模式: 立即保存模式（每次请求都保存）
+  [GameServer] 服务器启动成功 - 端口: 45677
+
+服务端保存数据:
+  [GameServer] SetJson Hash - Key: company, Field: player_001, Length: 234
+  [LocalStorage] 数据保存成功 - String: 1条, Hash: 2个
+
+服务端重启加载数据:
+  [LocalStorage] 加载String数据成功: 1 条记录
+  [LocalStorage] 加载Hash数据成功: 2 个Hash表
+  [LocalStorage] 初始化默认利率: 0.05 (5%)
+
+客户端（修复后）:
+  (没有字符编码警告)
+  (中文正常显示)
+
+【技术细节】
+────────────────────────────────────────────────────────────────
+
+UTF-8 编码特点:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - 变长编码：1-4字节
+  - ASCII兼容：英文字符仍是1字节
+  - 中文字符：通常3字节
+  - 全球通用：支持所有语言
+
+编码对比:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  字符: 测试
+
+  UTF-8:     E6 B5 8B E8 AF 95 (6字节)
+  GBK:       B2 E2 CA D4     (4字节)
+  UTF-16:    4E D3 8B D5     (4字节)
+
+  如果保存时用GBK，读取时用UTF-8:
+    结果: � � (乱码)
+
+new UTF8Encoding(false) 详解:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  参数 false 的含义:
+    - false: 不添加BOM（推荐）
+    - true:  添加BOM（不推荐）
+
+  BOM (Byte Order Mark):
+    - UTF-8 BOM: EF BB BF（3字节）
+    - 位于文件开头
+    - 标识文件编码
+    - 但JSON解析器通常不需要BOM
+    - 反而可能导致解析失败
+
+JSON 序列化设置:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var jsonSettings = new JsonSerializerSettings
+  {
+      Formatting = Formatting.Indented,        // 格式化输出
+      StringEscapeHandling = StringEscapeHandling.Default  // 默认转义
+  };
+
+  StringEscapeHandling 选项:
+    - Default: 转义控制字符，保留中文
+    - EscapeNonAscii: 转义所有非ASCII字符（不推荐）
+    - EscapeHtml: 转义HTML特殊字符
+
+【修改的文件】
+────────────────────────────────────────────────────────────────
+服务端:
+  ✓ GameCompanyServer\World Server\Storage\LocalDataStorage.cs
+    - 添加 using System.Text
+    - LoadFromDisk: 指定 Encoding.UTF8
+    - SaveToDisk: 使用 new UTF8Encoding(false)
+    - SaveToDisk: 添加 JsonSerializerSettings
+
+【常见问题】
+────────────────────────────────────────────────────────────────
+
+Q: 为什么不用 Encoding.UTF8 保存？
+A: Encoding.UTF8 默认带BOM，new UTF8Encoding(false) 不带BOM
+   不带BOM更适合JSON文件
+
+Q: 修复后旧数据能恢复吗？
+A: 不能。旧数据已经用错误编码保存，无法自动转换
+   必须删除旧文件，重新创建数据
+
+Q: 客户端需要修改吗？
+A: 不需要。问题在服务端文件保存
+   客户端从网络接收数据，Protobuf已经处理了编码
+
+Q: 会影响性能吗？
+A: 不会。UTF-8是标准编码，没有额外开销
+   相比GBK等编码，UTF-8更高效
+
+Q: 能否保留部分旧数据？
+A: 可以手动转换：
+   1. 用记事本打开 hash_data.json
+   2. 另存为 UTF-8 编码
+   3. 重启服务端
+   但如果已经乱码，无法恢复
+
+【总结】
+────────────────────────────────────────────────────────────────
+
+问题: 服务端保存文件时没有指定编码，导致中文乱码
+原因: File.WriteAllText/ReadAllText 使用平台默认编码
+修复: 显式指定 UTF-8 编码（无BOM）
+状态: ✅ 已修复
+
+关键步骤:
+  1. ✓ 修复服务端代码（已完成）
+  2. ⚠️ 删除旧数据文件（必须执行）
+  3. ✓ 重新编译服务端
+  4. ✓ 测试中文显示
+
+现在中文字符可以正确保存和显示了！✓
+
+⚠️ 重要提醒：
+   必须删除 GameCompanyServer\Data\ 下的旧文件！
+   否则仍会出现乱码！

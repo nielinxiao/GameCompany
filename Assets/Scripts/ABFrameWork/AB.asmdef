@@ -1,0 +1,19 @@
+{
+    "name": "AB",
+    "rootNamespace": "",
+    "references": [
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21",
+        "GUID:e9745f6a32442194c8dc5a43e9ab86f9",
+        "GUID:54cb1906aeb4e4264bc1d2aa3818a43f",
+        "GUID:aaf6804a66b394e9b8c133f80fc0c3e3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

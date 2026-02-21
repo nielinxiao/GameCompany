@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Icon
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: cdf31db874017994ca3a97122ffefb89, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 5b669b032fcabaa47a6ded5f1e34a1bb: 21300000
+    - 13a6c3041137e994ebb9c8fa6c4d7700: 21300000
+    - f513b444f8822254ab82b0dc40d25b76: 21300000
+    - 699c7b065cc779047a1ed75611cf13a5: 21300000
+    - 5cfacf96055359640987000d49d9b0b5: 21300000
+    - b3f9b597c397efe4babf9a0ee83d200d: 21300000
+    - 54816488d42317a4eba09101d45c1b2b: 21300000
+    - 6ddb0b8891f98ff4d97d1bf307c59698: 21300000
+    - 23b1f1d979391c846b4a1c08eb36ec63: 21300000
+    - 586d463b1b7f136409cc9e55838ed40c: 21300000
+    - ce29f8bba0853f944b35da5360db905f: 21300000
+    - 18a215bc064e829498e3fd34eda6ce0e: 21300000
+    - 939b436e76d0d1a48a117284d5f38bc4: 21300000
+    - 12a1ef2f60b986a4697f1b6027b76515: 21300000
+    - d1b6a1dfc6e49a64b903a47dd1c37cb3: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 5b669b032fcabaa47a6ded5f1e34a1bb, type: 3}
+  - {fileID: 21300000, guid: 13a6c3041137e994ebb9c8fa6c4d7700, type: 3}
+  - {fileID: 21300000, guid: f513b444f8822254ab82b0dc40d25b76, type: 3}
+  - {fileID: 21300000, guid: 699c7b065cc779047a1ed75611cf13a5, type: 3}
+  - {fileID: 21300000, guid: 5cfacf96055359640987000d49d9b0b5, type: 3}
+  - {fileID: 21300000, guid: b3f9b597c397efe4babf9a0ee83d200d, type: 3}
+  - {fileID: 21300000, guid: 54816488d42317a4eba09101d45c1b2b, type: 3}
+  - {fileID: 21300000, guid: 6ddb0b8891f98ff4d97d1bf307c59698, type: 3}
+  - {fileID: 21300000, guid: 23b1f1d979391c846b4a1c08eb36ec63, type: 3}
+  - {fileID: 21300000, guid: 586d463b1b7f136409cc9e55838ed40c, type: 3}
+  - {fileID: 21300000, guid: ce29f8bba0853f944b35da5360db905f, type: 3}
+  - {fileID: 21300000, guid: 18a215bc064e829498e3fd34eda6ce0e, type: 3}
+  - {fileID: 21300000, guid: 939b436e76d0d1a48a117284d5f38bc4, type: 3}
+  - {fileID: 21300000, guid: 12a1ef2f60b986a4697f1b6027b76515, type: 3}
+  - {fileID: 21300000, guid: d1b6a1dfc6e49a64b903a47dd1c37cb3, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - "10\u4ED3\u5E93\u3001\u4ED3\u50A8"
+  - Shape-1
+  - Oval
+  - "\u957F\u7BAD\u5934"
+  - Rectangle-1
+  - Shape
+  - Text input field
+  - build
+  - Back
+  - school-bag
+  - arrow-circle-up
+  - bag
+  - Shape 1
+  - "\u8868\u60C5 (1)"
+  - dianpu
+  m_RenderDataMap: {}
+  m_Tag: Icon
+  m_IsVariant: 0

@@ -1,0 +1,1504 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b47f99ceae4e546a4fcbae4cd10ae9, type: 3}
+  m_Name: Default PrefabElement
+  m_EditorClassIdentifier: 
+  Prefab:
+  - path: Assets/AssestBundle/_Textures/BrownWood.png
+    name: BrownWood
+  - path: Assets/AssestBundle/_Textures/BrownWood_Norm.png
+    name: BrownWood_Norm
+  - path: Assets/AssestBundle/_Textures/Door_Texture.png
+    name: Door_Texture
+  - path: Assets/AssestBundle/_Textures/Fabric_01.png
+    name: Fabric_01
+  - path: Assets/AssestBundle/_Textures/Fabric_01_Norm.png
+    name: Fabric_01_Norm
+  - path: Assets/AssestBundle/_Textures/Fabric_02.png
+    name: Fabric_02
+  - path: Assets/AssestBundle/_Textures/Fabric_03.png
+    name: Fabric_03
+  - path: Assets/AssestBundle/_Textures/Floor.png
+    name: Floor
+  - path: Assets/AssestBundle/_Textures/Floor_Norm.png
+    name: Floor_Norm
+  - path: Assets/AssestBundle/_Textures/Metal_01.tif
+    name: Metal_01
+  - path: Assets/AssestBundle/_Textures/Metal_02.tif
+    name: Metal_02
+  - path: Assets/AssestBundle/_Textures/Metal_03.tif
+    name: Metal_03
+  - path: Assets/AssestBundle/_Textures/Plastic_01.png
+    name: Plastic_01
+  - path: Assets/AssestBundle/_Textures/Stucco.png
+    name: Stucco
+  - path: Assets/AssestBundle/_Textures/Stucco_Norm.png
+    name: Stucco_Norm
+  - path: Assets/AssestBundle/_Textures/Stuff.psd
+    name: Stuff
+  - path: Assets/AssestBundle/_Textures/WhiteWood.png
+    name: WhiteWood
+  - path: Assets/AssestBundle/_Textures/WhiteWood_Norm.png
+    name: WhiteWood_Norm
+  - path: Assets/AssestBundle/Activty/GetReward.prefab
+    name: GetReward
+  - path: Assets/AssestBundle/Activty/RewardUIElement.prefab
+    name: RewardUIElement
+  - path: Assets/Sprite/ActivtySprite/box_light_rotation.png
+    name: box_light_rotation
+  - path: Assets/Sprite/ActivtySprite/btn_close_dark.png
+    name: btn_close_dark
+  - path: Assets/Sprite/ActivtySprite/btn_close_light.png
+    name: btn_close_light
+  - path: Assets/Sprite/ActivtySprite/Chest.png
+    name: Chest
+  - path: Assets/Sprite/ActivtySprite/Dice.png
+    name: Dice
+  - path: Assets/Sprite/ActivtySprite/Dice_1.png
+    name: Dice_1
+  - path: Assets/Sprite/ActivtySprite/Dice_2.png
+    name: Dice_2
+  - path: Assets/Sprite/ActivtySprite/Dice_3.png
+    name: Dice_3
+  - path: Assets/Sprite/ActivtySprite/Dice_4.png
+    name: Dice_4
+  - path: Assets/Sprite/ActivtySprite/Dice_5.png
+    name: Dice_5
+  - path: Assets/Sprite/ActivtySprite/Dice_6.png
+    name: Dice_6
+  - path: Assets/Sprite/ActivtySprite/DiceSelect.png
+    name: DiceSelect
+  - path: Assets/Sprite/ActivtySprite/icon_slot_star.png
+    name: icon_slot_star
+  - path: Assets/Sprite/ActivtySprite/img_box_close.png
+    name: img_box_close
+  - path: Assets/Sprite/ActivtySprite/img_box_reward.png
+    name: img_box_reward
+  - path: Assets/Sprite/ActivtySprite/passive_bg_1.png
+    name: passive_bg_1
+  - path: Assets/Sprite/ActivtySprite/passive_bg_2.png
+    name: passive_bg_2
+  - path: Assets/Sprite/ActivtySprite/passive_bg_3.png
+    name: passive_bg_3
+  - path: Assets/Sprite/ActivtySprite/passive_bg_4.png
+    name: passive_bg_4
+  - path: Assets/Sprite/ActivtySprite/passive_bg_5.png
+    name: passive_bg_5
+  - path: Assets/Sprite/ActivtySprite/passive_bg_6.png
+    name: passive_bg_6
+  - path: Assets/Sprite/ActivtySprite/passive_bg_7.png
+    name: passive_bg_7
+  - path: Assets/Sprite/ActivtySprite/rechargegift_fund_battlepass.png
+    name: rechargegift_fund_battlepass
+  - path: Assets/Sprite/ActivtySprite/super_value_item_bg.png
+    name: super_value_item_bg
+  - path: Assets/Sprite/ActivtySprite/UI_Animation.shader
+    name: UI_Animation
+  - path: Assets/Sprite/ActivtySprite/Unlit_UI_Animation.mat
+    name: Unlit_UI_Animation
+  - path: Assets/AssestBundle/AudioClip/anniversary_bg.wav
+    name: anniversary_bg
+  - path: Assets/AssestBundle/AudioClip/Baoleihudun.wav
+    name: Baoleihudun
+  - path: Assets/AssestBundle/AudioClip/Baozhayinxiao.wav
+    name: Baozhayinxiao
+  - path: Assets/AssestBundle/AudioClip/BossRage.wav
+    name: BossRage
+  - path: Assets/AssestBundle/AudioClip/BossZhanBG.wav
+    name: BossZhanBG
+  - path: Assets/AssestBundle/AudioClip/BossZhanBG_Final.wav
+    name: BossZhanBG_Final
+  - path: Assets/AssestBundle/AudioClip/BossZhenDi.wav
+    name: BossZhenDi
+  - path: Assets/AssestBundle/AudioClip/BridgePrizeAppear.wav
+    name: BridgePrizeAppear
+  - path: Assets/AssestBundle/AudioClip/BridgePrizeFly.wav
+    name: BridgePrizeFly
+  - path: Assets/AssestBundle/AudioClip/BridgePrizeOn.wav
+    name: BridgePrizeOn
+  - path: Assets/AssestBundle/AudioClip/BridgePrizeOverturn.wav
+    name: BridgePrizeOverturn
+  - path: Assets/AssestBundle/AudioClip/BridgeWoodDown.wav
+    name: BridgeWoodDown
+  - path: Assets/AssestBundle/AudioClip/BridgeWoodUp.wav
+    name: BridgeWoodUp
+  - path: Assets/AssestBundle/AudioClip/Button_Click_Big #4403.wav
+    name: Button_Click_Big #4403
+  - path: Assets/AssestBundle/AudioClip/Button_Click_Big.wav
+    name: Button_Click_Big
+  - path: Assets/AssestBundle/AudioClip/Button_Click_Small #5582.wav
+    name: Button_Click_Small #5582
+  - path: Assets/AssestBundle/AudioClip/Button_Click_Small.wav
+    name: Button_Click_Small
+  - path: Assets/AssestBundle/AudioClip/CandyCrushBGM.wav
+    name: CandyCrushBGM
+  - path: Assets/AssestBundle/AudioClip/CapsuleBall.wav
+    name: CapsuleBall
+  - path: Assets/AssestBundle/AudioClip/CapsuleKnob.wav
+    name: CapsuleKnob
+  - path: Assets/AssestBundle/AudioClip/CapsuleRoll.wav
+    name: CapsuleRoll
+  - path: Assets/AssestBundle/AudioClip/CastleAngry.wav
+    name: CastleAngry
+  - path: Assets/AssestBundle/AudioClip/CastleBatFly.wav
+    name: CastleBatFly
+  - path: Assets/AssestBundle/AudioClip/CastleBox.wav
+    name: CastleBox
+  - path: Assets/AssestBundle/AudioClip/CastleGostCatch.wav
+    name: CastleGostCatch
+  - path: Assets/AssestBundle/AudioClip/CastleGostEscape.wav
+    name: CastleGostEscape
+  - path: Assets/AssestBundle/AudioClip/CastleHighScore.wav
+    name: CastleHighScore
+  - path: Assets/AssestBundle/AudioClip/CastleOpenTheDoor.wav
+    name: CastleOpenTheDoor
+  - path: Assets/AssestBundle/AudioClip/ChapterBoxOpen.wav
+    name: ChapterBoxOpen
+  - path: Assets/AssestBundle/AudioClip/Chongdian.wav
+    name: Chongdian
+  - path: Assets/AssestBundle/AudioClip/ChristmasPush.wav
+    name: ChristmasPush
+  - path: Assets/AssestBundle/AudioClip/ChristmasRefresh.wav
+    name: ChristmasRefresh
+  - path: Assets/AssestBundle/AudioClip/chuangxing.wav
+    name: chuangxing
+  - path: Assets/AssestBundle/AudioClip/CircularBomb.wav
+    name: CircularBomb
+  - path: Assets/AssestBundle/AudioClip/CiTieXiShou.wav
+    name: CiTieXiShou
+  - path: Assets/AssestBundle/AudioClip/CollectTheSameColor.wav
+    name: CollectTheSameColor
+  - path: Assets/AssestBundle/AudioClip/Currency_Diamond.wav
+    name: Currency_Diamond
+  - path: Assets/AssestBundle/AudioClip/Currency_Gold.wav
+    name: Currency_Gold
+  - path: Assets/AssestBundle/AudioClip/DaJiangShiChongCi.wav
+    name: DaJiangShiChongCi
+  - path: Assets/AssestBundle/AudioClip/DaJiangShiSiWang.wav
+    name: DaJiangShiSiWang
+  - path: Assets/AssestBundle/AudioClip/DaJiangShiYaoYa.wav
+    name: DaJiangShiYaoYa
+  - path: Assets/AssestBundle/AudioClip/Danhuang.wav
+    name: Danhuang
+  - path: Assets/AssestBundle/AudioClip/Danhuang2.wav
+    name: Danhuang2
+  - path: Assets/AssestBundle/AudioClip/death_Fan_Egg.wav
+    name: death_Fan_Egg
+  - path: Assets/AssestBundle/AudioClip/death_human #33519.wav
+    name: death_human #33519
+  - path: Assets/AssestBundle/AudioClip/death_human.wav
+    name: death_human
+  - path: Assets/AssestBundle/AudioClip/death_skeleton.wav
+    name: death_skeleton
+  - path: Assets/AssestBundle/AudioClip/Demujiao.wav
+    name: Demujiao
+  - path: Assets/AssestBundle/AudioClip/DianCiShouLei.wav
+    name: DianCiShouLei
+  - path: Assets/AssestBundle/AudioClip/diandongguochan.wav
+    name: diandongguochan
+  - path: Assets/AssestBundle/AudioClip/DicePrison.wav
+    name: DicePrison
+  - path: Assets/AssestBundle/AudioClip/DiceRoll.wav
+    name: DiceRoll
+  - path: Assets/AssestBundle/AudioClip/DiLeiBaoZha.wav
+    name: DiLeiBaoZha
+  - path: Assets/AssestBundle/AudioClip/DiveBomb.wav
+    name: DiveBomb
+  - path: Assets/AssestBundle/AudioClip/DiveBubble.wav
+    name: DiveBubble
+  - path: Assets/AssestBundle/AudioClip/DiveFlashlight.wav
+    name: DiveFlashlight
+  - path: Assets/AssestBundle/AudioClip/DiveIce.wav
+    name: DiveIce
+  - path: Assets/AssestBundle/AudioClip/DoomRankDown.wav
+    name: DoomRankDown
+  - path: Assets/AssestBundle/AudioClip/DoomRankPop.wav
+    name: DoomRankPop
+  - path: Assets/AssestBundle/AudioClip/DoubleDuoNormalBGM.wav
+    name: DoubleDuoNormalBGM
+  - path: Assets/AssestBundle/AudioClip/EasterEggNormalBGM.wav
+    name: EasterEggNormalBGM
+  - path: Assets/AssestBundle/AudioClip/Equip_Combine.wav
+    name: Equip_Combine
+  - path: Assets/AssestBundle/AudioClip/Equip_UnWear.wav
+    name: Equip_UnWear
+  - path: Assets/AssestBundle/AudioClip/Equip_Wear.wav
+    name: Equip_Wear
+  - path: Assets/AssestBundle/AudioClip/Exp.wav
+    name: Exp
+  - path: Assets/AssestBundle/AudioClip/FeiJiHuXiao.wav
+    name: FeiJiHuXiao
+  - path: Assets/AssestBundle/AudioClip/FishGet.wav
+    name: FishGet
+  - path: Assets/AssestBundle/AudioClip/FlowerFieldNormalBGM.wav
+    name: FlowerFieldNormalBGM
+  - path: Assets/AssestBundle/AudioClip/FlowerFieldRoll.wav
+    name: FlowerFieldRoll
+  - path: Assets/AssestBundle/AudioClip/footstep01.wav
+    name: footstep01
+  - path: Assets/AssestBundle/AudioClip/footstep02.wav
+    name: footstep02
+  - path: Assets/AssestBundle/AudioClip/footstep03.wav
+    name: footstep03
+  - path: Assets/AssestBundle/AudioClip/footstep04.wav
+    name: footstep04
+  - path: Assets/AssestBundle/AudioClip/footstep05.wav
+    name: footstep05
+  - path: Assets/AssestBundle/AudioClip/footstep06.wav
+    name: footstep06
+  - path: Assets/AssestBundle/AudioClip/footstep07.wav
+    name: footstep07
+  - path: Assets/AssestBundle/AudioClip/Freezetime.wav
+    name: Freezetime
+  - path: Assets/AssestBundle/AudioClip/GameOver_Failure.wav
+    name: GameOver_Failure
+  - path: Assets/AssestBundle/AudioClip/GameOver_Win.wav
+    name: GameOver_Win
+  - path: Assets/AssestBundle/AudioClip/Gold.wav
+    name: Gold
+  - path: Assets/AssestBundle/AudioClip/GourmetDisappointment.wav
+    name: GourmetDisappointment
+  - path: Assets/AssestBundle/AudioClip/GourmetExpectation.wav
+    name: GourmetExpectation
+  - path: Assets/AssestBundle/AudioClip/GourmetLowScore.wav
+    name: GourmetLowScore
+  - path: Assets/AssestBundle/AudioClip/GourmetMiddleScore.wav
+    name: GourmetMiddleScore
+  - path: Assets/AssestBundle/AudioClip/GourmetNewGuest.wav
+    name: GourmetNewGuest
+  - path: Assets/AssestBundle/AudioClip/GourmetNormalBGM.wav
+    name: GourmetNormalBGM
+  - path: Assets/AssestBundle/AudioClip/GourmetSpecialBGM.wav
+    name: GourmetSpecialBGM
+  - path: Assets/AssestBundle/AudioClip/GourmetVeryHappy.wav
+    name: GourmetVeryHappy
+  - path: Assets/AssestBundle/AudioClip/Guangjianshengji.wav
+    name: Guangjianshengji
+  - path: Assets/AssestBundle/AudioClip/Guangren.wav
+    name: Guangren
+  - path: Assets/AssestBundle/AudioClip/guochan.wav
+    name: guochan
+  - path: Assets/AssestBundle/AudioClip/GVGBattle.wav
+    name: GVGBattle
+  - path: Assets/AssestBundle/AudioClip/GVGBlade.wav
+    name: GVGBlade
+  - path: Assets/AssestBundle/AudioClip/GVGKill.wav
+    name: GVGKill
+  - path: Assets/AssestBundle/AudioClip/GVGWin.wav
+    name: GVGWin
+  - path: Assets/AssestBundle/AudioClip/HeiDongBaoZha.wav
+    name: HeiDongBaoZha
+  - path: Assets/AssestBundle/AudioClip/HeiDongFaShe.wav
+    name: HeiDongFaShe
+  - path: Assets/AssestBundle/AudioClip/HeiDongShengCheng.wav
+    name: HeiDongShengCheng
+  - path: Assets/AssestBundle/AudioClip/HeroLevelUp.wav
+    name: HeroLevelUp
+  - path: Assets/AssestBundle/AudioClip/heroSkill_LinYin.wav
+    name: heroSkill_LinYin
+  - path: Assets/AssestBundle/AudioClip/HeroStarUp.wav
+    name: HeroStarUp
+  - path: Assets/AssestBundle/AudioClip/HiGradeSupportNeonSign.wav
+    name: HiGradeSupportNeonSign
+  - path: Assets/AssestBundle/AudioClip/hitted_feizaopao.wav
+    name: hitted_feizaopao
+  - path: Assets/AssestBundle/AudioClip/hitted_human #2508.wav
+    name: hitted_human #2508
+  - path: Assets/AssestBundle/AudioClip/Hitted_Human.wav
+    name: Hitted_Human
+  - path: Assets/AssestBundle/AudioClip/hitted_Monster_Blood.wav
+    name: hitted_Monster_Blood
+  - path: Assets/AssestBundle/AudioClip/hitted_skeleton.wav
+    name: hitted_skeleton
+  - path: Assets/AssestBundle/AudioClip/HorizontalBomb.wav
+    name: HorizontalBomb
+  - path: Assets/AssestBundle/AudioClip/Huijian.wav
+    name: Huijian
+  - path: Assets/AssestBundle/AudioClip/Huixuanbiao.wav
+    name: Huixuanbiao
+  - path: Assets/AssestBundle/AudioClip/Hunluanfashe.wav
+    name: Hunluanfashe
+  - path: Assets/AssestBundle/AudioClip/Hunluantielian.wav
+    name: Hunluantielian
+  - path: Assets/AssestBundle/AudioClip/Huojiandan.wav
+    name: Huojiandan
+  - path: Assets/AssestBundle/AudioClip/Huoyandianran.wav
+    name: Huoyandianran
+  - path: Assets/AssestBundle/AudioClip/Jianzhen.wav
+    name: Jianzhen
+  - path: Assets/AssestBundle/AudioClip/JiaoGuanZhiNu.wav
+    name: JiaoGuanZhiNu
+  - path: Assets/AssestBundle/AudioClip/Jiatelin.wav
+    name: Jiatelin
+  - path: Assets/AssestBundle/AudioClip/Jiguangmingzhong.wav
+    name: Jiguangmingzhong
+  - path: Assets/AssestBundle/AudioClip/Jinyuqipao.wav
+    name: Jinyuqipao
+  - path: Assets/AssestBundle/AudioClip/jiqiangliaoji.wav
+    name: jiqiangliaoji
+  - path: Assets/AssestBundle/AudioClip/jiqianliaoji2.wav
+    name: jiqianliaoji2
+  - path: Assets/AssestBundle/AudioClip/Jiqirenguidaopao.wav
+    name: Jiqirenguidaopao
+  - path: Assets/AssestBundle/AudioClip/Jiqirenjiguang.wav
+    name: Jiqirenjiguang
+  - path: Assets/AssestBundle/AudioClip/joeyend.wav
+    name: joeyend
+  - path: Assets/AssestBundle/AudioClip/joeyfight.wav
+    name: joeyfight
+  - path: Assets/AssestBundle/AudioClip/JunjleArchery.wav
+    name: JunjleArchery
+  - path: Assets/AssestBundle/AudioClip/JunjleDraw.wav
+    name: JunjleDraw
+  - path: Assets/AssestBundle/AudioClip/JunjleNormalRowBGM.wav
+    name: JunjleNormalRowBGM
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiBeiJing.wav
+    name: LaoHuJiBeiJing
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiChouZhongJiangLi.wav
+    name: LaoHuJiChouZhongJiangLi
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiDanJiangGunDong.wav
+    name: LaoHuJiDanJiangGunDong
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiHuoChe.wav
+    name: LaoHuJiHuoChe
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiHuoCheKaiChang.wav
+    name: LaoHuJiHuoCheKaiChang
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiSlot01.wav
+    name: LaoHuJiSlot01
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiSlot02.wav
+    name: LaoHuJiSlot02
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiSlot03.wav
+    name: LaoHuJiSlot03
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiSlot04.wav
+    name: LaoHuJiSlot04
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiSlot05.wav
+    name: LaoHuJiSlot05
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiSlot06.wav
+    name: LaoHuJiSlot06
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiSlot07.wav
+    name: LaoHuJiSlot07
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiSlot08.wav
+    name: LaoHuJiSlot08
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiTanChu.wav
+    name: LaoHuJiTanChu
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiYanHua1.wav
+    name: LaoHuJiYanHua1
+  - path: Assets/AssestBundle/AudioClip/LaoHuJiYanHua2.wav
+    name: LaoHuJiYanHua2
+  - path: Assets/AssestBundle/AudioClip/LevelUp #26412.wav
+    name: LevelUp #26412
+  - path: Assets/AssestBundle/AudioClip/LevelUp.wav
+    name: LevelUp
+  - path: Assets/AssestBundle/AudioClip/Lichangkaiqi.wav
+    name: Lichangkaiqi
+  - path: Assets/AssestBundle/AudioClip/lichangquan.wav
+    name: lichangquan
+  - path: Assets/AssestBundle/AudioClip/lieyangzhang.wav
+    name: lieyangzhang
+  - path: Assets/AssestBundle/AudioClip/LineBreak.wav
+    name: LineBreak
+  - path: Assets/AssestBundle/AudioClip/LuoLe1i.wav
+    name: LuoLe1i
+  - path: Assets/AssestBundle/AudioClip/LuoLei.wav
+    name: LuoLei
+  - path: Assets/AssestBundle/AudioClip/MagicGrid.wav
+    name: MagicGrid
+  - path: Assets/AssestBundle/AudioClip/Maidilei.wav
+    name: Maidilei
+  - path: Assets/AssestBundle/AudioClip/MainBG.wav
+    name: MainBG
+  - path: Assets/AssestBundle/AudioClip/Maozhua.wav
+    name: Maozhua
+  - path: Assets/AssestBundle/AudioClip/Mission1_BG.wav
+    name: Mission1_BG
+  - path: Assets/AssestBundle/AudioClip/MIssion2_BG.wav
+    name: MIssion2_BG
+  - path: Assets/AssestBundle/AudioClip/Mission3_BG.wav
+    name: Mission3_BG
+  - path: Assets/AssestBundle/AudioClip/Mission4_BG.wav
+    name: Mission4_BG
+  - path: Assets/AssestBundle/AudioClip/Mission5_BG.wav
+    name: Mission5_BG
+  - path: Assets/AssestBundle/AudioClip/Mission6_BG.wav
+    name: Mission6_BG
+  - path: Assets/AssestBundle/AudioClip/Mission7_BG.wav
+    name: Mission7_BG
+  - path: Assets/AssestBundle/AudioClip/Mission8_BG.wav
+    name: Mission8_BG
+  - path: Assets/AssestBundle/AudioClip/Mission9_BG.wav
+    name: Mission9_BG
+  - path: Assets/AssestBundle/AudioClip/Mission10_BG.wav
+    name: Mission10_BG
+  - path: Assets/AssestBundle/AudioClip/Mission11_BG.wav
+    name: Mission11_BG
+  - path: Assets/AssestBundle/AudioClip/Mission12_BG.wav
+    name: Mission12_BG
+  - path: Assets/AssestBundle/AudioClip/Mission14_BG.wav
+    name: Mission14_BG
+  - path: Assets/AssestBundle/AudioClip/Mission15_BG.wav
+    name: Mission15_BG
+  - path: Assets/AssestBundle/AudioClip/Mission16_BG.wav
+    name: Mission16_BG
+  - path: Assets/AssestBundle/AudioClip/Mission17_BG.wav
+    name: Mission17_BG
+  - path: Assets/AssestBundle/AudioClip/Mission18_BG.wav
+    name: Mission18_BG
+  - path: Assets/AssestBundle/AudioClip/Mission19_BG.wav
+    name: Mission19_BG
+  - path: Assets/AssestBundle/AudioClip/Mission20_BG.wav
+    name: Mission20_BG
+  - path: Assets/AssestBundle/AudioClip/Mission21_BG.wav
+    name: Mission21_BG
+  - path: Assets/AssestBundle/AudioClip/Mission22_BG.wav
+    name: Mission22_BG
+  - path: Assets/AssestBundle/AudioClip/Mission23_BG.wav
+    name: Mission23_BG
+  - path: Assets/AssestBundle/AudioClip/Mission24_BG.wav
+    name: Mission24_BG
+  - path: Assets/AssestBundle/AudioClip/Mission25_BG.wav
+    name: Mission25_BG
+  - path: Assets/AssestBundle/AudioClip/Mission26_BG.wav
+    name: Mission26_BG
+  - path: Assets/AssestBundle/AudioClip/Mission27_BG.wav
+    name: Mission27_BG
+  - path: Assets/AssestBundle/AudioClip/Mission28_BG.wav
+    name: Mission28_BG
+  - path: Assets/AssestBundle/AudioClip/Mission29_BG.wav
+    name: Mission29_BG
+  - path: Assets/AssestBundle/AudioClip/Mission_FuHuo.wav
+    name: Mission_FuHuo
+  - path: Assets/AssestBundle/AudioClip/Mission_GoldMine.wav
+    name: Mission_GoldMine
+  - path: Assets/AssestBundle/AudioClip/MissionGVG_BG.wav
+    name: MissionGVG_BG
+  - path: Assets/AssestBundle/AudioClip/MonopolyJump.wav
+    name: MonopolyJump
+  - path: Assets/AssestBundle/AudioClip/MonsterBulletsCreate.wav
+    name: MonsterBulletsCreate
+  - path: Assets/AssestBundle/AudioClip/MonsterBulletsCreateMulti.wav
+    name: MonsterBulletsCreateMulti
+  - path: Assets/AssestBundle/AudioClip/OrderNormalBGM.wav
+    name: OrderNormalBGM
+  - path: Assets/AssestBundle/AudioClip/Pangxieshuilang.wav
+    name: Pangxieshuilang
+  - path: Assets/AssestBundle/AudioClip/paozhu.wav
+    name: paozhu
+  - path: Assets/AssestBundle/AudioClip/ParkourNormalBGM.wav
+    name: ParkourNormalBGM
+  - path: Assets/AssestBundle/AudioClip/ParkourRocket.wav
+    name: ParkourRocket
+  - path: Assets/AssestBundle/AudioClip/PiggyBreak.wav
+    name: PiggyBreak
+  - path: Assets/AssestBundle/AudioClip/PinballTreasureNormalBGM.wav
+    name: PinballTreasureNormalBGM
+  - path: Assets/AssestBundle/AudioClip/PrisonGrid.wav
+    name: PrisonGrid
+  - path: Assets/AssestBundle/AudioClip/qianghualiaoji.wav
+    name: qianghualiaoji
+  - path: Assets/AssestBundle/AudioClip/Qingwashuidan.wav
+    name: Qingwashuidan
+  - path: Assets/AssestBundle/AudioClip/Qiupaida.wav
+    name: Qiupaida
+  - path: Assets/AssestBundle/AudioClip/Qiupaixiao.wav
+    name: Qiupaixiao
+  - path: Assets/AssestBundle/AudioClip/QuanPingBaoZha.wav
+    name: QuanPingBaoZha
+  - path: Assets/AssestBundle/AudioClip/Ranshaopingposui.wav
+    name: Ranshaopingposui
+  - path: Assets/AssestBundle/AudioClip/RecoverHP.wav
+    name: RecoverHP
+  - path: Assets/AssestBundle/AudioClip/Renzhebiao.wav
+    name: Renzhebiao
+  - path: Assets/AssestBundle/AudioClip/RollingBattleNormalBGM.wav
+    name: RollingBattleNormalBGM
+  - path: Assets/AssestBundle/AudioClip/shanguang.wav
+    name: shanguang
+  - path: Assets/AssestBundle/AudioClip/Shaojianfashe.wav
+    name: Shaojianfashe
+  - path: Assets/AssestBundle/AudioClip/Shaojiankoushao.wav
+    name: Shaojiankoushao
+  - path: Assets/AssestBundle/AudioClip/Shoulijian.wav
+    name: Shoulijian
+  - path: Assets/AssestBundle/AudioClip/SkyscraperContainer.wav
+    name: SkyscraperContainer
+  - path: Assets/AssestBundle/AudioClip/SkyscraperNormalBGM.wav
+    name: SkyscraperNormalBGM
+  - path: Assets/AssestBundle/AudioClip/SoupKitchenCook.wav
+    name: SoupKitchenCook
+  - path: Assets/AssestBundle/AudioClip/SoupKitchenNormalBGM.wav
+    name: SoupKitchenNormalBGM
+  - path: Assets/AssestBundle/AudioClip/SpinRod.wav
+    name: SpinRod
+  - path: Assets/AssestBundle/AudioClip/SpringSnow.wav
+    name: SpringSnow
+  - path: Assets/AssestBundle/AudioClip/StarAddUp.wav
+    name: StarAddUp
+  - path: Assets/AssestBundle/AudioClip/StarGet.wav
+    name: StarGet
+  - path: Assets/AssestBundle/AudioClip/SupportNormalBGM.wav
+    name: SupportNormalBGM
+  - path: Assets/AssestBundle/AudioClip/TearTheBox.wav
+    name: TearTheBox
+  - path: Assets/AssestBundle/AudioClip/ThanksgivingFoodAppear.wav
+    name: ThanksgivingFoodAppear
+  - path: Assets/AssestBundle/AudioClip/ThanksgivingFoodDisappear.wav
+    name: ThanksgivingFoodDisappear
+  - path: Assets/AssestBundle/AudioClip/ThanksgivingTurkey.wav
+    name: ThanksgivingTurkey
+  - path: Assets/AssestBundle/AudioClip/TipsShow.wav
+    name: TipsShow
+  - path: Assets/AssestBundle/AudioClip/Tiqiu.wav
+    name: Tiqiu
+  - path: Assets/AssestBundle/AudioClip/TouZhiShouLei.wav
+    name: TouZhiShouLei
+  - path: Assets/AssestBundle/AudioClip/TrainRun.wav
+    name: TrainRun
+  - path: Assets/AssestBundle/AudioClip/TurnGrid.wav
+    name: TurnGrid
+  - path: Assets/AssestBundle/AudioClip/typewriter bell.wav
+    name: typewriter bell
+  - path: Assets/AssestBundle/AudioClip/typewriter key.wav
+    name: typewriter key
+  - path: Assets/AssestBundle/AudioClip/UICommon_QualityBlue.wav
+    name: UICommon_QualityBlue
+  - path: Assets/AssestBundle/AudioClip/UICommon_QualityGreen.wav
+    name: UICommon_QualityGreen
+  - path: Assets/AssestBundle/AudioClip/UICommon_QualityPurple.wav
+    name: UICommon_QualityPurple
+  - path: Assets/AssestBundle/AudioClip/UICommon_RewardShow.wav
+    name: UICommon_RewardShow
+  - path: Assets/AssestBundle/AudioClip/UICommon_TextShow.wav
+    name: UICommon_TextShow
+  - path: Assets/AssestBundle/AudioClip/UndergroundBomb.wav
+    name: UndergroundBomb
+  - path: Assets/AssestBundle/AudioClip/UndergroundDigSoil.wav
+    name: UndergroundDigSoil
+  - path: Assets/AssestBundle/AudioClip/UndergroundDigStone.wav
+    name: UndergroundDigStone
+  - path: Assets/AssestBundle/AudioClip/UnlockAll.wav
+    name: UnlockAll
+  - path: Assets/AssestBundle/AudioClip/UnlockHammer.wav
+    name: UnlockHammer
+  - path: Assets/AssestBundle/AudioClip/UnlockNormal.wav
+    name: UnlockNormal
+  - path: Assets/AssestBundle/AudioClip/UnlockSystem.wav
+    name: UnlockSystem
+  - path: Assets/AssestBundle/AudioClip/WuXianDian.wav
+    name: WuXianDian
+  - path: Assets/AssestBundle/AudioClip/zhangfeng.wav
+    name: zhangfeng
+  - path: Assets/AssestBundle/AudioManger/Audio System Manager.prefab
+    name: Audio System Manager
+  - path: Assets/AssestBundle/BuildPrefab/Armchair1_C2.prefab
+    name: Armchair1_C2
+  - path: Assets/AssestBundle/BuildPrefab/Armchair2_C1.prefab
+    name: Armchair2_C1
+  - path: Assets/AssestBundle/BuildPrefab/Armchair2_C2.prefab
+    name: Armchair2_C2
+  - path: Assets/AssestBundle/BuildPrefab/BookCase1_C1.prefab
+    name: BookCase1_C1
+  - path: Assets/AssestBundle/BuildPrefab/BookCase1_C2.prefab
+    name: BookCase1_C2
+  - path: Assets/AssestBundle/BuildPrefab/BookCase1_C3.prefab
+    name: BookCase1_C3
+  - path: Assets/AssestBundle/BuildPrefab/BookCase2_C1.prefab
+    name: BookCase2_C1
+  - path: Assets/AssestBundle/BuildPrefab/BookCase2_C2.prefab
+    name: BookCase2_C2
+  - path: Assets/AssestBundle/BuildPrefab/BookCase2_C3.prefab
+    name: BookCase2_C3
+  - path: Assets/AssestBundle/BuildPrefab/BuildPrefab_Plane.prefab
+    name: BuildPrefab_Plane
+  - path: Assets/AssestBundle/BuildPrefab/Cabinet1_C1.prefab
+    name: Cabinet1_C1
+  - path: Assets/AssestBundle/BuildPrefab/Cabinet1_C2.prefab
+    name: Cabinet1_C2
+  - path: Assets/AssestBundle/BuildPrefab/Cabinet1_C3.prefab
+    name: Cabinet1_C3
+  - path: Assets/AssestBundle/BuildPrefab/Chair_01.prefab
+    name: Chair_01
+  - path: Assets/AssestBundle/BuildPrefab/Char.prefab
+    name: Char
+  - path: Assets/AssestBundle/BuildPrefab/ClothesRack1_C1.prefab
+    name: ClothesRack1_C1
+  - path: Assets/AssestBundle/BuildPrefab/ClothesRack1_C2.prefab
+    name: ClothesRack1_C2
+  - path: Assets/AssestBundle/BuildPrefab/ConferenceTable_01.prefab
+    name: ConferenceTable_01
+  - path: Assets/AssestBundle/BuildPrefab/ConferenceTable_02.prefab
+    name: ConferenceTable_02
+  - path: Assets/AssestBundle/BuildPrefab/ConferenceTable_03.prefab
+    name: ConferenceTable_03
+  - path: Assets/AssestBundle/BuildPrefab/CornerDesk1_C1.prefab
+    name: CornerDesk1_C1
+  - path: Assets/AssestBundle/BuildPrefab/CornerDesk1_C2.prefab
+    name: CornerDesk1_C2
+  - path: Assets/AssestBundle/BuildPrefab/CornerDesk1_C3.prefab
+    name: CornerDesk1_C3
+  - path: Assets/AssestBundle/BuildPrefab/Desk1.prefab
+    name: Desk1
+  - path: Assets/AssestBundle/BuildPrefab/Desk2_C1.prefab
+    name: Desk2_C1
+  - path: Assets/AssestBundle/BuildPrefab/Desk2_C2.prefab
+    name: Desk2_C2
+  - path: Assets/AssestBundle/BuildPrefab/Desk2_C3.prefab
+    name: Desk2_C3
+  - path: Assets/AssestBundle/BuildPrefab/Desk3_C1.prefab
+    name: Desk3_C1
+  - path: Assets/AssestBundle/BuildPrefab/Desk3_C2.prefab
+    name: Desk3_C2
+  - path: Assets/AssestBundle/BuildPrefab/Desk3_C3.prefab
+    name: Desk3_C3
+  - path: Assets/AssestBundle/BuildPrefab/Drawer1_C1.prefab
+    name: Drawer1_C1
+  - path: Assets/AssestBundle/BuildPrefab/Drawer1_C2.prefab
+    name: Drawer1_C2
+  - path: Assets/AssestBundle/BuildPrefab/Drawer1_C3.prefab
+    name: Drawer1_C3
+  - path: Assets/AssestBundle/BuildPrefab/GlassPartition_01.prefab
+    name: GlassPartition_01
+  - path: Assets/AssestBundle/BuildPrefab/GlassPartition_02.prefab
+    name: GlassPartition_02
+  - path: Assets/AssestBundle/BuildPrefab/Partition1_01.prefab
+    name: Partition1_01
+  - path: Assets/AssestBundle/BuildPrefab/Partition1_02.prefab
+    name: Partition1_02
+  - path: Assets/AssestBundle/BuildPrefab/Partition1_03.prefab
+    name: Partition1_03
+  - path: Assets/AssestBundle/BuildPrefab/Partition1_04.prefab
+    name: Partition1_04
+  - path: Assets/AssestBundle/BuildPrefab/Partition2_01.prefab
+    name: Partition2_01
+  - path: Assets/AssestBundle/BuildPrefab/Reception_01.prefab
+    name: Reception_01
+  - path: Assets/AssestBundle/BuildPrefab/Reception_02.prefab
+    name: Reception_02
+  - path: Assets/AssestBundle/BuildPrefab/Shelf1_C1_01.prefab
+    name: Shelf1_C1_01
+  - path: Assets/AssestBundle/BuildPrefab/Shelf1_C2_01.prefab
+    name: Shelf1_C2_01
+  - path: Assets/AssestBundle/BuildPrefab/Shelf2_C1.prefab
+    name: Shelf2_C1
+  - path: Assets/AssestBundle/BuildPrefab/Shelf2_C2.prefab
+    name: Shelf2_C2
+  - path: Assets/AssestBundle/BuildPrefab/Shelf2_C3.prefab
+    name: Shelf2_C3
+  - path: Assets/AssestBundle/BuildPrefab/Shelf3_C1.prefab
+    name: Shelf3_C1
+  - path: Assets/AssestBundle/BuildPrefab/Shelf3_C2.prefab
+    name: Shelf3_C2
+  - path: Assets/AssestBundle/BuildPrefab/Shelf3_C3.prefab
+    name: Shelf3_C3
+  - path: Assets/AssestBundle/BuildPrefab/SideTable1_C1.prefab
+    name: SideTable1_C1
+  - path: Assets/AssestBundle/BuildPrefab/SideTable1_C2.prefab
+    name: SideTable1_C2
+  - path: Assets/AssestBundle/BuildPrefab/SideTable2_C1.prefab
+    name: SideTable2_C1
+  - path: Assets/AssestBundle/BuildPrefab/SideTable2_C2.prefab
+    name: SideTable2_C2
+  - path: Assets/AssestBundle/BuildPrefab/SideTable3_C1.prefab
+    name: SideTable3_C1
+  - path: Assets/AssestBundle/BuildPrefab/SideTable3_C2.prefab
+    name: SideTable3_C2
+  - path: Assets/AssestBundle/BuildPrefab/SideTable3_C3.prefab
+    name: SideTable3_C3
+  - path: Assets/AssestBundle/BuildPrefab/Sofa1_C1.prefab
+    name: Sofa1_C1
+  - path: Assets/AssestBundle/BuildPrefab/Sofa1_C2.prefab
+    name: Sofa1_C2
+  - path: Assets/AssestBundle/BuildPrefab/Sofa2_C1.prefab
+    name: Sofa2_C1
+  - path: Assets/AssestBundle/BuildPrefab/Sofa2_C2.prefab
+    name: Sofa2_C2
+  - path: Assets/AssestBundle/BuildPrefab/Storage1_C1.prefab
+    name: Storage1_C1
+  - path: Assets/AssestBundle/BuildPrefab/Storage1_C2.prefab
+    name: Storage1_C2
+  - path: Assets/AssestBundle/BuildPrefab/Storage1_C3.prefab
+    name: Storage1_C3
+  - path: Assets/AssestBundle/BuildPrefab/Storage2_C1.prefab
+    name: Storage2_C1
+  - path: Assets/AssestBundle/BuildPrefab/Storage2_C2.prefab
+    name: Storage2_C2
+  - path: Assets/AssestBundle/BuildPrefab/Storage2_C3.prefab
+    name: Storage2_C3
+  - path: Assets/AssestBundle/BuildPrefab/Storage3_C1.prefab
+    name: Storage3_C1
+  - path: Assets/AssestBundle/BuildPrefab/Storage3_C2.prefab
+    name: Storage3_C2
+  - path: Assets/AssestBundle/BuildPrefab/Storage3_C3.prefab
+    name: Storage3_C3
+  - path: Assets/AssestBundle/BuildPrefab/Wall1_01.prefab
+    name: Wall1_01
+  - path: Assets/AssestBundle/BuildPrefab/Wall1_02.prefab
+    name: Wall1_02
+  - path: Assets/AssestBundle/BuildPrefab/WorkChair1_C1.prefab
+    name: WorkChair1_C1
+  - path: Assets/AssestBundle/BuildPrefab/WorkChair2_C1.prefab
+    name: WorkChair2_C1
+  - path: Assets/AssestBundle/BuildPrefab/WorkChair2_C2.prefab
+    name: WorkChair2_C2
+  - path: Assets/AssestBundle/BuildPrefab/WorkChair2_C3.prefab
+    name: WorkChair2_C3
+  - path: Assets/AssestBundle/BuildPrefab/WorkChair3_C1.prefab
+    name: WorkChair3_C1
+  - path: Assets/AssestBundle/BuildPrefab/WorkChair3_C2.prefab
+    name: WorkChair3_C2
+  - path: Assets/AssestBundle/BuildPrefab/WorkChair3_C3.prefab
+    name: WorkChair3_C3
+  - path: Assets/AssestBundle/Character/Character.prefab
+    name: Character
+  - path: Assets/Resources/FontAwesome.otf
+    name: FontAwesome
+  - path: Assets/Resources/Normal_Font.asset
+    name: Normal_Font
+  - path: Assets/AssestBundle/Manager/GameManager.prefab
+    name: GameManager
+  - path: Assets/AssestBundle/Manager/RedPointManager.prefab
+    name: RedPointManager
+  - path: Assets/AssestBundle/Materials/BrownWood.mat
+    name: BrownWood
+  - path: Assets/AssestBundle/Materials/Chrome.mat
+    name: Chrome
+  - path: Assets/AssestBundle/Materials/Door.mat
+    name: Door
+  - path: Assets/AssestBundle/Materials/Fabric_01.mat
+    name: Fabric_01
+  - path: Assets/AssestBundle/Materials/Fabric_02.mat
+    name: Fabric_02
+  - path: Assets/AssestBundle/Materials/Fabric_03.mat
+    name: Fabric_03
+  - path: Assets/AssestBundle/Materials/Floor.mat
+    name: Floor
+  - path: Assets/AssestBundle/Materials/Glass.mat
+    name: Glass
+  - path: Assets/AssestBundle/Materials/GreyMetal_01.mat
+    name: GreyMetal_01
+  - path: Assets/AssestBundle/Materials/PaintPicture.mat
+    name: PaintPicture
+  - path: Assets/AssestBundle/Materials/Plant_01.mat
+    name: Plant_01
+  - path: Assets/AssestBundle/Materials/Plastic_01.mat
+    name: Plastic_01
+  - path: Assets/AssestBundle/Materials/Plastic_02.mat
+    name: Plastic_02
+  - path: Assets/AssestBundle/Materials/Screen.mat
+    name: Screen
+  - path: Assets/AssestBundle/Materials/Stucco.mat
+    name: Stucco
+  - path: Assets/AssestBundle/Materials/Stuff.mat
+    name: Stuff
+  - path: Assets/AssestBundle/Materials/TV.mat
+    name: TV
+  - path: Assets/AssestBundle/Materials/WallBottom.mat
+    name: WallBottom
+  - path: Assets/AssestBundle/Materials/WhitePlastic.mat
+    name: WhitePlastic
+  - path: Assets/AssestBundle/Materials/WhiteWood.mat
+    name: WhiteWood
+  - path: Assets/CharacterAni/Art/Characters/LowPoly/FREE_HumanLowPoly/Materials_Humans/Armor.mat
+    name: Armor
+  - path: Assets/CharacterAni/Art/Characters/LowPoly/FREE_HumanLowPoly/Materials_Humans/Body.mat
+    name: Body
+  - path: Assets/CharacterAni/Art/Characters/LowPoly/FREE_HumanLowPoly/Materials_Humans/Eyes.mat
+    name: Eyes
+  - path: Assets/CharacterAni/Art/Characters/LowPoly/FREE_HumanLowPoly/Materials_Humans/Hair.mat
+    name: Hair
+  - path: Assets/CharacterAni/Art/Characters/LowPoly/FREE_HumanLowPoly/Materials_Humans/Underwear.mat
+    name: Underwear
+  - path: Assets/AssestBundle/ScirptObject/BuildPrefabs.asset
+    name: BuildPrefabs
+  - path: Assets/AssestBundle/ScirptObject/MessageBoxScriptObejct.asset
+    name: MessageBoxScriptObejct
+  - path: Assets/Resources/Shader/UIBackGround.shader
+    name: UIBackGround
+  - path: Assets/Resources/Shader/UIProgress.shader
+    name: UIProgress
+  - path: Assets/Resources/Shader/Unlit_UIBackGround 1.mat
+    name: Unlit_UIBackGround 1
+  - path: Assets/Resources/Shader/Unlit_UIBackGround.mat
+    name: Unlit_UIBackGround
+  - path: Assets/Resources/Shader/Unlit_UIProgress.mat
+    name: Unlit_UIProgress
+  - path: Assets/AssestBundle/UI/Build_Canvas.prefab
+    name: Build_Canvas
+  - path: Assets/AssestBundle/UI/BuildBox.prefab
+    name: BuildBox
+  - path: Assets/AssestBundle/UI/CharacterTalk.prefab
+    name: CharacterTalk
+  - path: Assets/AssestBundle/UI/ChatLog.prefab
+    name: ChatLog
+  - path: Assets/AssestBundle/UI/GameIcon.prefab
+    name: GameIcon
+  - path: Assets/AssestBundle/UI/GiftElement.prefab
+    name: GiftElement
+  - path: Assets/AssestBundle/UI/JobElement.prefab
+    name: JobElement
+  - path: Assets/AssestBundle/UI/Loading.prefab
+    name: Loading
+  - path: Assets/AssestBundle/UI/MessageBox.prefab
+    name: MessageBox
+  - path: Assets/AssestBundle/UI/MessageElement.prefab
+    name: MessageElement
+  - path: Assets/AssestBundle/UI/Money.prefab
+    name: Money
+  - path: Assets/AssestBundle/UI/MoneyBackGround.prefab
+    name: MoneyBackGround
+  - path: Assets/AssestBundle/UI/NameButton.prefab
+    name: NameButton
+  - path: Assets/AssestBundle/UI/PersonElement.prefab
+    name: PersonElement
+  - path: Assets/AssestBundle/UI/PersonNumber.prefab
+    name: PersonNumber
+  - path: Assets/AssestBundle/UI/Shop_BackGround.prefab
+    name: Shop_BackGround
+  - path: Assets/AssestBundle/UI/Shop_Element.prefab
+    name: Shop_Element
+  - path: Assets/AssestBundle/UI/StockElement.prefab
+    name: StockElement
+  - path: Assets/Sprite/8.png
+    name: 8
+  - path: Assets/Sprite/12.png
+    name: 12
+  - path: Assets/Sprite/16.png
+    name: 16
+  - path: Assets/Sprite/logo/DuiHuaKeMeng.png
+    name: DuiHuaKeMeng
+  - path: Assets/Sprite/logo/habbyid_logo_home.png
+    name: habbyid_logo_home
+  - path: Assets/Sprite/logo/logo.png
+    name: logo
+  - path: Assets/Sprite/logo/splash.png
+    name: splash
+  - path: Assets/Sprite/Settings/01.png
+    name: 01
+  - path: Assets/Sprite/Settings/AdsIcon.png
+    name: AdsIcon
+  - path: Assets/Sprite/Settings/attr_info.png
+    name: attr_info
+  - path: Assets/Sprite/Settings/console-64.png
+    name: console-64
+  - path: Assets/Sprite/Settings/ic_envelop_close.png
+    name: ic_envelop_close
+  - path: Assets/Sprite/Settings/ic_envelop_open.png
+    name: ic_envelop_open
+  - path: Assets/Sprite/Settings/ic_gift_close.png
+    name: ic_gift_close
+  - path: Assets/Sprite/Settings/ic_gift_open.png
+    name: ic_gift_open
+  - path: Assets/Sprite/Settings/UICommon_Inventory.png
+    name: UICommon_Inventory
+  - path: "Assets/Sprite/Settings/\xD7.png"
+    name: "\xD7"
+  - path: "Assets/Sprite/Settings/\u221A.png"
+    name: "\u221A"
+  - path: Assets/Sprite/UIElement/Accessory_SynthesisPanel_filter_bg.png
+    name: Accessory_SynthesisPanel_filter_bg
+  - path: Assets/Sprite/UIElement/activeNum.png
+    name: activeNum
+  - path: Assets/Sprite/UIElement/bg_item1.png
+    name: bg_item1
+  - path: Assets/Sprite/UIElement/bg_synergy.png
+    name: bg_synergy
+  - path: Assets/Sprite/UIElement/CommonInGameSideButton.png
+    name: CommonInGameSideButton
+  - path: Assets/Sprite/UIElement/giftpack_bg_day.png
+    name: giftpack_bg_day
+  - path: Assets/Sprite/UIElement/giftpack_bg_month.png
+    name: giftpack_bg_month
+  - path: Assets/Sprite/UIElement/giftpack_bg_week.png
+    name: giftpack_bg_week
+  - path: Assets/Sprite/UIElement/goBtn.png
+    name: goBtn
+  - path: Assets/Sprite/UIElement/Gray_Button.png
+    name: Gray_Button
+  - path: Assets/Sprite/UIElement/ItemUseProgressBar.png
+    name: ItemUseProgressBar
+  - path: Assets/Sprite/UIElement/LockBackground.png
+    name: LockBackground
+  - path: Assets/Sprite/UIElement/loginAgreeSelect.png
+    name: loginAgreeSelect
+  - path: Assets/Sprite/UIElement/ProgressFill_Background.png
+    name: ProgressFill_Background
+  - path: Assets/Sprite/UIElement/ProgressFill_BossHp-1.png
+    name: ProgressFill_BossHp-1
+  - path: Assets/Sprite/UIElement/ProgressFill_BossHp.png
+    name: ProgressFill_BossHp
+  - path: Assets/Sprite/UIElement/ProgressFill_Exp.png
+    name: ProgressFill_Exp
+  - path: Assets/Sprite/UIElement/smallbg_1.png
+    name: smallbg_1
+  - path: Assets/Sprite/UIElement/smallbg_2.png
+    name: smallbg_2
+  - path: Assets/Sprite/UIElement/smallbg_3.png
+    name: smallbg_3
+  - path: Assets/Sprite/UIElement/smallbg_4.png
+    name: smallbg_4
+  - path: Assets/Sprite/UIElement/smallbg_7.png
+    name: smallbg_7
+  - path: Assets/Sprite/UIElement/smallbg_11.png
+    name: smallbg_11
+  - path: Assets/Sprite/UIElement/ui_Indicator.png
+    name: ui_Indicator
+  - path: Assets/Sprite/UIElement/UICommon_BG.png
+    name: UICommon_BG
+  - path: Assets/Sprite/UIElement/UICommon_Close.png
+    name: UICommon_Close
+  - path: Assets/Sprite/UIElement/UICommon_SideButton_BG2.png
+    name: UICommon_SideButton_BG2
+  - path: Assets/Sprite/UIElement/UICommon_Title_Bg.png
+    name: UICommon_Title_Bg
+  - path: Assets/Sprite/UIElement/UICommon_Title_Red.png
+    name: UICommon_Title_Red
+  - path: Assets/Sprite/UIElement/UICommon_Title_Yellow.png
+    name: UICommon_Title_Yellow
+  - path: Assets/Sprite/UIElement/UICommon_ToggleBG_Active.png
+    name: UICommon_ToggleBG_Active
+  - path: Assets/Sprite/UIElement/WeaponItemBG_Enhance.png
+    name: WeaponItemBG_Enhance
+  - path: Assets/Sprite/UIElement/WeaponItemBG_Enhance2.png
+    name: WeaponItemBG_Enhance2
+  - path: Assets/Sprite/UIElement/WeaponItemBG_Normal.png
+    name: WeaponItemBG_Normal
+  - path: Assets/Sprite/UIElement/WeaponSkinUIbg.png
+    name: WeaponSkinUIbg
+  - path: Assets/AssestBundle/UIForm/BuildUIElement.prefab
+    name: BuildUIElement
+  - path: Assets/AssestBundle/UIForm/changeNameButtonTips.prefab
+    name: changeNameButtonTips
+  - path: Assets/AssestBundle/UIForm/CompanyInformation.prefab
+    name: CompanyInformation
+  - path: Assets/AssestBundle/UIForm/CompanyList.prefab
+    name: CompanyList
+  - path: Assets/AssestBundle/UIForm/GiftMessage.prefab
+    name: GiftMessage
+  - path: Assets/AssestBundle/UIForm/IconUser.prefab
+    name: IconUser
+  - path: Assets/AssestBundle/UIForm/MainCanvas.prefab
+    name: MainCanvas
+  - path: Assets/AssestBundle/UIForm/MessMessage.prefab
+    name: MessMessage
+  - path: Assets/AssestBundle/UIForm/PersonList.prefab
+    name: PersonList
+  - path: Assets/AssestBundle/UIForm/phone.prefab
+    name: phone
+  - path: Assets/AssestBundle/UIForm/progressElement.prefab
+    name: progressElement
+  - path: Assets/AssestBundle/UIForm/SceneProgressForm.prefab
+    name: SceneProgressForm
+  - path: Assets/AssestBundle/UIForm/Setting.prefab
+    name: Setting
+  - path: Assets/AssestBundle/UIForm/Shop.prefab
+    name: Shop
+  - path: Assets/AssestBundle/UIForm/StockChart.prefab
+    name: StockChart
+  - path: Assets/AssestBundle/UIForm/Tip.prefab
+    name: Tip
+  - path: Assets/AssestBundle/UIForm/UnClickTip.prefab
+    name: UnClickTip
+  Keys:
+  - BrownWood
+  - BrownWood_Norm
+  - Door_Texture
+  - Fabric_01
+  - Fabric_01_Norm
+  - Fabric_02
+  - Fabric_03
+  - Floor
+  - Floor_Norm
+  - Metal_01
+  - Metal_02
+  - Metal_03
+  - Plastic_01
+  - Stucco
+  - Stucco_Norm
+  - Stuff
+  - WhiteWood
+  - WhiteWood_Norm
+  - GetReward
+  - RewardUIElement
+  - box_light_rotation
+  - btn_close_dark
+  - btn_close_light
+  - Chest
+  - Dice
+  - Dice_1
+  - Dice_2
+  - Dice_3
+  - Dice_4
+  - Dice_5
+  - Dice_6
+  - DiceSelect
+  - icon_slot_star
+  - img_box_close
+  - img_box_reward
+  - passive_bg_1
+  - passive_bg_2
+  - passive_bg_3
+  - passive_bg_4
+  - passive_bg_5
+  - passive_bg_6
+  - passive_bg_7
+  - rechargegift_fund_battlepass
+  - super_value_item_bg
+  - UI_Animation
+  - Unlit_UI_Animation
+  - anniversary_bg
+  - Baoleihudun
+  - Baozhayinxiao
+  - BossRage
+  - BossZhanBG
+  - BossZhanBG_Final
+  - BossZhenDi
+  - BridgePrizeAppear
+  - BridgePrizeFly
+  - BridgePrizeOn
+  - BridgePrizeOverturn
+  - BridgeWoodDown
+  - BridgeWoodUp
+  - Button_Click_Big #4403
+  - Button_Click_Big
+  - Button_Click_Small #5582
+  - Button_Click_Small
+  - CandyCrushBGM
+  - CapsuleBall
+  - CapsuleKnob
+  - CapsuleRoll
+  - CastleAngry
+  - CastleBatFly
+  - CastleBox
+  - CastleGostCatch
+  - CastleGostEscape
+  - CastleHighScore
+  - CastleOpenTheDoor
+  - ChapterBoxOpen
+  - Chongdian
+  - ChristmasPush
+  - ChristmasRefresh
+  - chuangxing
+  - CircularBomb
+  - CiTieXiShou
+  - CollectTheSameColor
+  - Currency_Diamond
+  - Currency_Gold
+  - DaJiangShiChongCi
+  - DaJiangShiSiWang
+  - DaJiangShiYaoYa
+  - Danhuang
+  - Danhuang2
+  - death_Fan_Egg
+  - death_human #33519
+  - death_human
+  - death_skeleton
+  - Demujiao
+  - DianCiShouLei
+  - diandongguochan
+  - DicePrison
+  - DiceRoll
+  - DiLeiBaoZha
+  - DiveBomb
+  - DiveBubble
+  - DiveFlashlight
+  - DiveIce
+  - DoomRankDown
+  - DoomRankPop
+  - DoubleDuoNormalBGM
+  - EasterEggNormalBGM
+  - Equip_Combine
+  - Equip_UnWear
+  - Equip_Wear
+  - Exp
+  - FeiJiHuXiao
+  - FishGet
+  - FlowerFieldNormalBGM
+  - FlowerFieldRoll
+  - footstep01
+  - footstep02
+  - footstep03
+  - footstep04
+  - footstep05
+  - footstep06
+  - footstep07
+  - Freezetime
+  - GameOver_Failure
+  - GameOver_Win
+  - Gold
+  - GourmetDisappointment
+  - GourmetExpectation
+  - GourmetLowScore
+  - GourmetMiddleScore
+  - GourmetNewGuest
+  - GourmetNormalBGM
+  - GourmetSpecialBGM
+  - GourmetVeryHappy
+  - Guangjianshengji
+  - Guangren
+  - guochan
+  - GVGBattle
+  - GVGBlade
+  - GVGKill
+  - GVGWin
+  - HeiDongBaoZha
+  - HeiDongFaShe
+  - HeiDongShengCheng
+  - HeroLevelUp
+  - heroSkill_LinYin
+  - HeroStarUp
+  - HiGradeSupportNeonSign
+  - hitted_feizaopao
+  - hitted_human #2508
+  - Hitted_Human
+  - hitted_Monster_Blood
+  - hitted_skeleton
+  - HorizontalBomb
+  - Huijian
+  - Huixuanbiao
+  - Hunluanfashe
+  - Hunluantielian
+  - Huojiandan
+  - Huoyandianran
+  - Jianzhen
+  - JiaoGuanZhiNu
+  - Jiatelin
+  - Jiguangmingzhong
+  - Jinyuqipao
+  - jiqiangliaoji
+  - jiqianliaoji2
+  - Jiqirenguidaopao
+  - Jiqirenjiguang
+  - joeyend
+  - joeyfight
+  - JunjleArchery
+  - JunjleDraw
+  - JunjleNormalRowBGM
+  - LaoHuJiBeiJing
+  - LaoHuJiChouZhongJiangLi
+  - LaoHuJiDanJiangGunDong
+  - LaoHuJiHuoChe
+  - LaoHuJiHuoCheKaiChang
+  - LaoHuJiSlot01
+  - LaoHuJiSlot02
+  - LaoHuJiSlot03
+  - LaoHuJiSlot04
+  - LaoHuJiSlot05
+  - LaoHuJiSlot06
+  - LaoHuJiSlot07
+  - LaoHuJiSlot08
+  - LaoHuJiTanChu
+  - LaoHuJiYanHua1
+  - LaoHuJiYanHua2
+  - LevelUp #26412
+  - LevelUp
+  - Lichangkaiqi
+  - lichangquan
+  - lieyangzhang
+  - LineBreak
+  - LuoLe1i
+  - LuoLei
+  - MagicGrid
+  - Maidilei
+  - MainBG
+  - Maozhua
+  - Mission1_BG
+  - MIssion2_BG
+  - Mission3_BG
+  - Mission4_BG
+  - Mission5_BG
+  - Mission6_BG
+  - Mission7_BG
+  - Mission8_BG
+  - Mission9_BG
+  - Mission10_BG
+  - Mission11_BG
+  - Mission12_BG
+  - Mission14_BG
+  - Mission15_BG
+  - Mission16_BG
+  - Mission17_BG
+  - Mission18_BG
+  - Mission19_BG
+  - Mission20_BG
+  - Mission21_BG
+  - Mission22_BG
+  - Mission23_BG
+  - Mission24_BG
+  - Mission25_BG
+  - Mission26_BG
+  - Mission27_BG
+  - Mission28_BG
+  - Mission29_BG
+  - Mission_FuHuo
+  - Mission_GoldMine
+  - MissionGVG_BG
+  - MonopolyJump
+  - MonsterBulletsCreate
+  - MonsterBulletsCreateMulti
+  - OrderNormalBGM
+  - Pangxieshuilang
+  - paozhu
+  - ParkourNormalBGM
+  - ParkourRocket
+  - PiggyBreak
+  - PinballTreasureNormalBGM
+  - PrisonGrid
+  - qianghualiaoji
+  - Qingwashuidan
+  - Qiupaida
+  - Qiupaixiao
+  - QuanPingBaoZha
+  - Ranshaopingposui
+  - RecoverHP
+  - Renzhebiao
+  - RollingBattleNormalBGM
+  - shanguang
+  - Shaojianfashe
+  - Shaojiankoushao
+  - Shoulijian
+  - SkyscraperContainer
+  - SkyscraperNormalBGM
+  - SoupKitchenCook
+  - SoupKitchenNormalBGM
+  - SpinRod
+  - SpringSnow
+  - StarAddUp
+  - StarGet
+  - SupportNormalBGM
+  - TearTheBox
+  - ThanksgivingFoodAppear
+  - ThanksgivingFoodDisappear
+  - ThanksgivingTurkey
+  - TipsShow
+  - Tiqiu
+  - TouZhiShouLei
+  - TrainRun
+  - TurnGrid
+  - typewriter bell
+  - typewriter key
+  - UICommon_QualityBlue
+  - UICommon_QualityGreen
+  - UICommon_QualityPurple
+  - UICommon_RewardShow
+  - UICommon_TextShow
+  - UndergroundBomb
+  - UndergroundDigSoil
+  - UndergroundDigStone
+  - UnlockAll
+  - UnlockHammer
+  - UnlockNormal
+  - UnlockSystem
+  - WuXianDian
+  - zhangfeng
+  - Audio System Manager
+  - Armchair1_C2
+  - Armchair2_C1
+  - Armchair2_C2
+  - BookCase1_C1
+  - BookCase1_C2
+  - BookCase1_C3
+  - BookCase2_C1
+  - BookCase2_C2
+  - BookCase2_C3
+  - BuildPrefab_Plane
+  - Cabinet1_C1
+  - Cabinet1_C2
+  - Cabinet1_C3
+  - Chair_01
+  - Char
+  - ClothesRack1_C1
+  - ClothesRack1_C2
+  - ConferenceTable_01
+  - ConferenceTable_02
+  - ConferenceTable_03
+  - CornerDesk1_C1
+  - CornerDesk1_C2
+  - CornerDesk1_C3
+  - Desk1
+  - Desk2_C1
+  - Desk2_C2
+  - Desk2_C3
+  - Desk3_C1
+  - Desk3_C2
+  - Desk3_C3
+  - Drawer1_C1
+  - Drawer1_C2
+  - Drawer1_C3
+  - GlassPartition_01
+  - GlassPartition_02
+  - Partition1_01
+  - Partition1_02
+  - Partition1_03
+  - Partition1_04
+  - Partition2_01
+  - Reception_01
+  - Reception_02
+  - Shelf1_C1_01
+  - Shelf1_C2_01
+  - Shelf2_C1
+  - Shelf2_C2
+  - Shelf2_C3
+  - Shelf3_C1
+  - Shelf3_C2
+  - Shelf3_C3
+  - SideTable1_C1
+  - SideTable1_C2
+  - SideTable2_C1
+  - SideTable2_C2
+  - SideTable3_C1
+  - SideTable3_C2
+  - SideTable3_C3
+  - Sofa1_C1
+  - Sofa1_C2
+  - Sofa2_C1
+  - Sofa2_C2
+  - Storage1_C1
+  - Storage1_C2
+  - Storage1_C3
+  - Storage2_C1
+  - Storage2_C2
+  - Storage2_C3
+  - Storage3_C1
+  - Storage3_C2
+  - Storage3_C3
+  - Wall1_01
+  - Wall1_02
+  - WorkChair1_C1
+  - WorkChair2_C1
+  - WorkChair2_C2
+  - WorkChair2_C3
+  - WorkChair3_C1
+  - WorkChair3_C2
+  - WorkChair3_C3
+  - Character
+  - FontAwesome
+  - Normal_Font
+  - GameManager
+  - RedPointManager
+  - BrownWood
+  - Chrome
+  - Door
+  - Fabric_01
+  - Fabric_02
+  - Fabric_03
+  - Floor
+  - Glass
+  - GreyMetal_01
+  - PaintPicture
+  - Plant_01
+  - Plastic_01
+  - Plastic_02
+  - Screen
+  - Stucco
+  - Stuff
+  - TV
+  - WallBottom
+  - WhitePlastic
+  - WhiteWood
+  - Armor
+  - Body
+  - Eyes
+  - Hair
+  - Underwear
+  - BuildPrefabs
+  - MessageBoxScriptObejct
+  - UIBackGround
+  - UIProgress
+  - Unlit_UIBackGround 1
+  - Unlit_UIBackGround
+  - Unlit_UIProgress
+  - Build_Canvas
+  - BuildBox
+  - CharacterTalk
+  - ChatLog
+  - GameIcon
+  - GiftElement
+  - JobElement
+  - Loading
+  - MessageBox
+  - MessageElement
+  - Money
+  - MoneyBackGround
+  - NameButton
+  - PersonElement
+  - PersonNumber
+  - Shop_BackGround
+  - Shop_Element
+  - StockElement
+  - 8
+  - 12
+  - 16
+  - DuiHuaKeMeng
+  - habbyid_logo_home
+  - logo
+  - splash
+  - 01
+  - AdsIcon
+  - attr_info
+  - console-64
+  - ic_envelop_close
+  - ic_envelop_open
+  - ic_gift_close
+  - ic_gift_open
+  - UICommon_Inventory
+  - "\xD7"
+  - "\u221A"
+  - Accessory_SynthesisPanel_filter_bg
+  - activeNum
+  - bg_item1
+  - bg_synergy
+  - CommonInGameSideButton
+  - giftpack_bg_day
+  - giftpack_bg_month
+  - giftpack_bg_week
+  - goBtn
+  - Gray_Button
+  - ItemUseProgressBar
+  - LockBackground
+  - loginAgreeSelect
+  - ProgressFill_Background
+  - ProgressFill_BossHp-1
+  - ProgressFill_BossHp
+  - ProgressFill_Exp
+  - smallbg_1
+  - smallbg_2
+  - smallbg_3
+  - smallbg_4
+  - smallbg_7
+  - smallbg_11
+  - ui_Indicator
+  - UICommon_BG
+  - UICommon_Close
+  - UICommon_SideButton_BG2
+  - UICommon_Title_Bg
+  - UICommon_Title_Red
+  - UICommon_Title_Yellow
+  - UICommon_ToggleBG_Active
+  - WeaponItemBG_Enhance
+  - WeaponItemBG_Enhance2
+  - WeaponItemBG_Normal
+  - WeaponSkinUIbg
+  - BuildUIElement
+  - changeNameButtonTips
+  - CompanyInformation
+  - CompanyList
+  - GiftMessage
+  - IconUser
+  - MainCanvas
+  - MessMessage
+  - PersonList
+  - phone
+  - progressElement
+  - SceneProgressForm
+  - Setting
+  - Shop
+  - StockChart
+  - Tip
+  - UnClickTip
